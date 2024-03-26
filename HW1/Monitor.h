@@ -32,11 +32,11 @@ SC_MODULE( Monitor ) {
 	sc_in < bool > linear2_valid;
 	sc_in < sc_fixed_fast<40,17> > linear2_result;
 	sc_in < bool > linear3_valid;
+	//sc_in < sc_fixed_fast<40,17> > linear3_result;
 	sc_vector < sc_in < sc_fixed_fast<40,17> > > linear3_result{"linear3_result", 1000};
 
 	vector<string> imagenet_classes;
 
-	//sc_in < sc_fixed_fast<40,17> > linear3_result;
 	int cycle;
 	
 	void run();

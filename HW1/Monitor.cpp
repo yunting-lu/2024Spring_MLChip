@@ -40,7 +40,7 @@ void Monitor:: run() {
 
 	//SoftMax
 	if(linear3_valid.read() == 1){
-		cout << "SoftMax: " << endl;
+		
 		double sum = 0;
 		vector<double> softmax_result(1000);
 		vector<pair<int, double>> softmax_result_pair(1000);
@@ -62,9 +62,8 @@ void Monitor:: run() {
 		cout << "------------------------------------------------------------" << endl;
 		for(int i = 0; i < 5; i++){
 			cout << fixed << setprecision(6) << "  " << i+1 << "\t " << softmax_result_pair[i].first << "\t" << (double)(linear3_result[softmax_result_pair[i].first].read()) << "\t" << 100*softmax_result_pair[i].second << "\t" << imagenet_classes[softmax_result_pair[i].first] << endl;
-			//cout << "[Top " << i+1 << "] idx: " << softmax_result_pair[i].first << "\t val: " << linear3_result[softmax_result_pair[i].first] << "\t possibility: " << 100*softmax_result_pair[i].second << "\t class name: " << imagenet_classes[softmax_result_pair[i].first] << endl;
 		}
-
+		cout << "------------------------------------------------------------" << endl;
 	}
 
 	

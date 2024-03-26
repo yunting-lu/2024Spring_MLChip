@@ -26,7 +26,6 @@ SC_MODULE(CONV_RELU_1)
 	//sc_vector<sc_signal<sc_fixed_fast<40,17>>> bias1{"bias1", 64};
 	vector<double> weight1;
 	vector<double> bias1;
-	bool ready;
 
 	void run(){
 		const int IN_CHANNELS = 3;
@@ -43,7 +42,6 @@ SC_MODULE(CONV_RELU_1)
 		
 		//read weight and bias 
 		if ( rst.read() == 1 ) {
-			ready = 1;
 			std::ifstream bfile("data/conv1_bias.txt");
 			double b_value;
 			int bcnt = 0;
@@ -78,7 +76,7 @@ SC_MODULE(CONV_RELU_1)
 			
 			int i_ptr, w_ptr;
 			int i_ptr_x, i_ptr_y;
-			//sc_fixed_fast<40,17> partial_sum; //double
+			//sc_fixed_fast<40,17> partial_sum;
 			double partial_sum;
 			for(int oc=0; oc<OUT_CHANNELS; oc++){
 				for(int orow=0; orow<OUT_HEIGHT; orow++){
@@ -105,15 +103,13 @@ SC_MODULE(CONV_RELU_1)
 					
 
 						if((partial_sum + bias1[oc])>0){
-							partial_sum += bias1[oc];
 							//out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol] = partial_sum + bias1[oc]; //(sc_fixed_fast<40,17>)(partial_sum);
+							partial_sum += bias1[oc];
 							out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol] = (sc_fixed_fast<40,17>)partial_sum;
-
 						}
 						else{
 							out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol] = 0;
 						}
-						
 					}
 				}
 			}
@@ -123,11 +119,9 @@ SC_MODULE(CONV_RELU_1)
 	//std::cout<<"conv1_result[0,0,0]"<<out_feature_map[0]<<std::endl;
 	}
 
-	// ^^^^^ put your code here ^^^^^
-
 	SC_CTOR(CONV_RELU_1)
 	{
-		ready = 0;
+
 		SC_METHOD(run);
 
 		sensitive << clk.pos();
@@ -201,7 +195,6 @@ SC_MODULE(MAX_POOLING_1)
 		}
 	}
 
-	// ^^^^^ put your code here ^^^^^
 
 	SC_CTOR(MAX_POOLING_1)
 	{
@@ -234,7 +227,6 @@ SC_MODULE(CONV_RELU_2)
 	vector<double> weight2;
 	vector<double> bias2;
 
-	//bool ready;
 
 	void run(){
 		const int IN_CHANNELS = 64;
@@ -251,7 +243,6 @@ SC_MODULE(CONV_RELU_2)
 
 		//read weight and bias 
 		if ( rst.read() == 1 ) {
-			//ready = 1;
 			std::ifstream bfile("data/conv2_bias.txt");
 			if (!bfile.is_open()) {
 			    std::cerr << "Unable to open bias2 file!" << std::endl;
@@ -328,11 +319,10 @@ SC_MODULE(CONV_RELU_2)
 		}
 	}
 
-	// ^^^^^ put your code here ^^^^^
 
 	SC_CTOR(CONV_RELU_2)
 	{
-		//ready = 0;
+
 		SC_METHOD(run);
 
 		sensitive << clk.pos() ;
@@ -374,7 +364,7 @@ SC_MODULE(MAX_POOLING_2)
 				out_feature_map[i].write(0.0);
 			}
 		}
-		//maxpool1
+		//maxpool2
 		if(in_valid.read()) {
 			
 			int i_ptr, w_ptr;
@@ -405,7 +395,6 @@ SC_MODULE(MAX_POOLING_2)
 		}
 	}
 
-	// ^^^^^ put your code here ^^^^^
 
 	SC_CTOR(MAX_POOLING_2)
 	{
@@ -526,7 +515,6 @@ SC_MODULE(CONV_RELU_3)
 		}
 	}
 
-	// ^^^^^ put your code here ^^^^^
 
 	SC_CTOR(CONV_RELU_3)
 	{
@@ -590,14 +578,8 @@ SC_MODULE(CONV_RELU_4)
 			int wcnt = 0;
 			while(wfile >> w_value) {
 				weight4.push_back(w_value);
-				if(wcnt<64){
-					//std::cout<<"w_value: "<<w_value<<std::endl;
-				}
 				wcnt++;
 			}
-			//for(int i=0; i<64; i++){
-			//	std::cout<<"weight_"<<i<<": "<<weight1[i]<<std::endl;
-			//}
 
 			wfile.close();
 			bfile.close();
@@ -606,12 +588,9 @@ SC_MODULE(CONV_RELU_4)
 				out_feature_map[i].write(0.0);
 			}
 		}
-		//conv3
+		//conv4
 		if(in_valid.read()) {
-			//for(int i=0; i<64; i++){
-			//	std::cout<<"weight3_"<<i<<": "<<weight3[i]<<std::endl;
-			//}
-			
+
 			int i_ptr, w_ptr;
 			int i_ptr_x, i_ptr_y;
 			double partial_sum;
@@ -652,7 +631,6 @@ SC_MODULE(CONV_RELU_4)
 		}
 	}
 
-	// ^^^^^ put your code here ^^^^^
 
 	SC_CTOR(CONV_RELU_4)
 	{
@@ -708,7 +686,6 @@ SC_MODULE(CONV_RELU_5)
 			int bcnt = 0;
 			while(bfile >> b_value) {
 				bias5.push_back(b_value);
-				//std::cout << "bias1[" << bcnt << "]: " << b_value << std::endl;
 				bcnt++;
 			}
 
@@ -727,11 +704,8 @@ SC_MODULE(CONV_RELU_5)
 				out_feature_map[i].write(0.0);
 			}
 		}
-		//conv3
+		//conv5
 		if(in_valid.read()) {
-			//for(int i=0; i<64; i++){
-			//	std::cout<<"weight3_"<<i<<": "<<weight3[i]<<std::endl;
-			//}
 			
 			int i_ptr, w_ptr;
 			int i_ptr_x, i_ptr_y;
@@ -773,7 +747,6 @@ SC_MODULE(CONV_RELU_5)
 		}
 	}
 
-	// ^^^^^ put your code here ^^^^^
 
 	SC_CTOR(CONV_RELU_5)
 	{
@@ -819,7 +792,7 @@ SC_MODULE(MAX_POOLING_3)
 				out_feature_map[i].write(0.0);
 			}
 		}
-		//maxpool1
+		//maxpool3
 		if(in_valid.read()) {
 			
 			int i_ptr, w_ptr;
@@ -850,7 +823,6 @@ SC_MODULE(MAX_POOLING_3)
 		}
 	}
 
-	// ^^^^^ put your code here ^^^^^
 
 	SC_CTOR(MAX_POOLING_3)
 	{
@@ -941,7 +913,6 @@ SC_MODULE(LINEAR_RELU_1)
 		}
 	}
 
-	// ^^^^^ put your code here ^^^^^
 
 	SC_CTOR(LINEAR_RELU_1)
 	{
@@ -1006,7 +977,7 @@ SC_MODULE(LINEAR_RELU_2)
 				out_feature_map[i].write(0.0);
 			}
 		}
-		//fc6 + RELU
+		//fc7 + RELU
 		if(in_valid.read()) {
 			double partial_sum;
 
@@ -1028,7 +999,6 @@ SC_MODULE(LINEAR_RELU_2)
 			//std::cout<<"fc7_result[0]"<<out_feature_map[0]<<std::endl;
 		}
 	}
-	// ^^^^^ put your code here ^^^^^
 
 	SC_CTOR(LINEAR_RELU_2)
 	{
@@ -1093,7 +1063,7 @@ SC_MODULE(LINEAR_3)
 				out_feature_map[i].write(0.0);
 			}
 		}
-		//fc6 + RELU
+		//fc8
 		if(in_valid.read()) {
 			double partial_sum;
 
@@ -1111,7 +1081,6 @@ SC_MODULE(LINEAR_3)
 		}
 	}
 
-	// ^^^^^ put your code here ^^^^^
 
 	SC_CTOR(LINEAR_3)
 	{
@@ -1121,4 +1090,3 @@ SC_MODULE(LINEAR_3)
 		sensitive << clk.pos() ;
 	}
 };
-
