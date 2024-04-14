@@ -65,7 +65,7 @@ SC_MODULE(ALEXNET)
                         m_LINEAR_3( "m_LINEAR_3" )
     {
 
-
+        
 
         m_CONV_RELU_1.clk(clk);
 	    m_CONV_RELU_1.rst(rst);

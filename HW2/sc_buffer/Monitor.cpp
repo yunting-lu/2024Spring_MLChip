@@ -24,16 +24,16 @@ void Monitor:: run() {
 		cout << "------------------------------------------------------------" << endl;
 		cout << "cycle: " << cycle << endl;
 		cout << "in_valid: \t" << in_valid << endl;
-		// cout << "conv1_valid: \t" << conv1_valid << "\t" << "conv1_result[0,0,0]: \t" << conv1_result << endl;
-		// cout << "mp1_valid: \t" << mp1_valid << "\t" << "mp1_result[0,0,0]: \t" << mp1_result << endl;
-		// cout << "conv2_valid: \t" << conv2_valid << "\t" << "conv2_result[0,0,0]: \t" << conv2_result << endl;
-		// cout << "mp2_valid: \t" << mp2_valid << "\t" << "mp2_result[0,0,0]: \t" << mp2_result << endl;
-		// cout << "conv3_valid: \t" << conv3_valid << "\t" << "conv3_result[0,0,0]: \t" << conv3_result << endl;
-		// cout << "conv4_valid: \t" << conv4_valid << "\t" << "conv4_result[0,0,0]: \t" << conv4_result << endl;
-		// cout << "conv5_valid: \t" << conv5_valid << "\t" << "conv5_result[0,0,0]: \t" << conv5_result << endl;
-		// cout << "mp3_valid: \t" << mp3_valid << "\t" << "mp3_result[0,0,0]: \t" << mp3_result << endl;
-		// cout << "linear1_valid: \t" << linear1_valid << "\t" << "linear1_result[0,0,0]: \t" << linear1_result << endl;
-		// cout << "linear2_valid: \t" << linear2_valid << "\t" << "linear2_result[0,0,0]: \t" << linear2_result << endl;
+		cout << "conv1_valid: \t" << conv1_valid << "\t" << "conv1_result[0,0,0]: \t" << conv1_result << endl;
+		cout << "mp1_valid: \t" << mp1_valid << "\t" << "mp1_result[0,0,0]: \t" << mp1_result << endl;
+		cout << "conv2_valid: \t" << conv2_valid << "\t" << "conv2_result[0,0,0]: \t" << conv2_result << endl;
+		cout << "mp2_valid: \t" << mp2_valid << "\t" << "mp2_result[0,0,0]: \t" << mp2_result << endl;
+		cout << "conv3_valid: \t" << conv3_valid << "\t" << "conv3_result[0,0,0]: \t" << conv3_result << endl;
+		cout << "conv4_valid: \t" << conv4_valid << "\t" << "conv4_result[0,0,0]: \t" << conv4_result << endl;
+		cout << "conv5_valid: \t" << conv5_valid << "\t" << "conv5_result[0,0,0]: \t" << conv5_result << endl;
+		cout << "mp3_valid: \t" << mp3_valid << "\t" << "mp3_result[0,0,0]: \t" << mp3_result << endl;
+		cout << "linear1_valid: \t" << linear1_valid << "\t" << "linear1_result[0,0,0]: \t" << linear1_result << endl;
+		cout << "linear2_valid: \t" << linear2_valid << "\t" << "linear2_result[0,0,0]: \t" << linear2_result << endl;
 		cout << "linear3_valid: \t" << linear3_valid << "\t" << "linear3_result[0,0,0]: \t" << linear3_result[0] << endl;
 		cout << "------------------------------------------------------------" << endl;
 	}

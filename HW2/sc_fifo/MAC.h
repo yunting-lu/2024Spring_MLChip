@@ -21,10 +21,10 @@ SC_MODULE(CONV_RELU_1)
 
 	sc_in<bool> clk;
 	sc_in<bool> rst;
-	sc_vector<sc_in<sc_fixed_fast<45,17>>> in_feature_map{"in_feature_map", IN_VECTOR_SIZE};
+	sc_vector<sc_in<sc_fixed_fast<45,17>>> in_feature_map{"in_feature_map", 150528};
 
 	// sc_vector<sc_fifo_out<>> out_feature_map{"out_feature_map", OUT_VECTOR_SIZE};
-	sc_vector<sc_port<sc_fifo_out_if<sc_fixed_fast<45,17>>>> out_feature_map{"out_feature_map", OUT_VECTOR_SIZE};
+	sc_vector<sc_port<sc_fifo_out_if<sc_fixed_fast<45,17>>>> out_feature_map{"out_feature_map", 193600};
 
 	sc_in<bool> in_valid;
 	sc_port<sc_fifo_out_if<bool>> out_valid;
@@ -47,17 +47,15 @@ SC_MODULE(CONV_RELU_1)
 	std::string bias_dir;
 
 	void run(){
-		// cout << "conv1" << endl;
+		
 		while(true){
 
-			out_valid->write(0);
+			// out_valid->write(0);
+			cout << "conv1" << endl;
 
-			//conv1
-			if(in_valid.read() == 1) {
 
-				weight1.clear();
-				bias1.clear();
 
+			if(rst.read() == 1) {
 				//read weight and bias
 				std::ifstream bfile(bias_dir);
 				double b_value;
@@ -77,9 +75,20 @@ SC_MODULE(CONV_RELU_1)
 
 				wfile.close();
 				bfile.close();
+
 				// for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
 				// 	out_feature_map[i]->write(0.0);
 				// }
+				out_valid->write(0);
+			}
+
+			//conv1
+			else if(in_valid.read() == 1) {
+
+				// weight1.clear();
+				// bias1.clear();
+
+				
 
 				int i_ptr, w_ptr;
 				int i_ptr_x, i_ptr_y;
@@ -123,14 +132,21 @@ SC_MODULE(CONV_RELU_1)
 					}
 				}
 				out_valid->write(1);
-				cout << "\033[31mconv1 performed\033[0m" << endl;
+				cout << "conv1 performed" << endl;
 
 			// cout << "conv1_valid: \t" << in_valid << "\t" << "conv1_result[0,0,0]: \t" << out_feature_map[0] << endl;
+			}
+			else{
+				// for(int j=0; j<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; j++){
+				// 	out_feature_map[j]->write(0.0);
+				// }
+				out_valid->write(0);
 			}
 			// Please help me display the out_feature_map
 
 
-			// std::cout<<"conv1_result[0,0,0]"<<out_feature_map[0]<<std::endl;
+			// std::cout<<"conv1_result[0,0,0]"<<out_feature_map[0][0]<<std::endl;
+			// cout << "out_feature_map[0]->num_available(): " << out_feature_map[0]->num_available() << endl;
 			wait();
 		}
 	}
@@ -174,19 +190,22 @@ SC_MODULE(MAX_POOLING_1)
 		//const int PADDING = 2;
 
 		while(true){
-			out_valid->write(0);
-			// cout << "maxpool1" << endl;
-			// cout << in_valid.num_available() << endl;
+			// out_valid->write(0);
+			cout << "maxpool1" << endl;
+			cout << "conv1_valid num_available: " << in_valid->num_available() << endl;
+			cout << "conv1_result num_available: " << in_feature_map[0]->num_available() << endl;
 
-			// if ( rst.read() == 1 ) {
-			// 	for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
-			// 		out_feature_map[i]->write(0.0);
-			// 	}
-			// }
+			if ( rst.read() == 1 ) {
+
+				// for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
+				// 	out_feature_map[i]->write(0.0);
+				// }
+				out_valid->write(0);
+			}
 			// cout << "maxpool1's valid"<<in_valid->read() << endl;
 			//maxpool1
-			if(in_valid->read() == 1) {
-				// cout << "Performing MAX POOLING 1 "<< endl;
+			else if(in_valid->read() == 1) {
+				cout << "Performing MAX POOLING 1 "<< endl;
 
 				int i_ptr, w_ptr;
 				int i_ptr_x, i_ptr_y;
@@ -198,7 +217,7 @@ SC_MODULE(MAX_POOLING_1)
 				for(int i=0; i<193600; i++){
 					in_feature_map_tmp[i] = in_feature_map[i]->read();
 					//print 10 values of in_feature_map_tmp
-					if(i>2000 && i<2400){
+					if(i<100){
 						// cout << "in_feature_map_tmp[" << i << "]: " << in_feature_map_tmp[i] << endl;
 					}
 				}
@@ -223,16 +242,18 @@ SC_MODULE(MAX_POOLING_1)
 							out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol]->write(largest);
 							// cout << "ocol" << ocol << endl;
 						}
-						// cout <<"OUT_HEIGHT" << OUT_HEIGHT << endl;
-						// cout << "orow value" << orow << endl;
 					}
-					// cout <<"OUT_CHANNEL" << OUT_CHANNELS << endl;
-					// cout << "oc value" << oc << endl;
 				}
 				out_valid->write(1);
-				cout << "\033[31mmaxpool1 performed\033[0m" << endl;
+				cout << "maxpool1 performed" << endl;
 
 				//display the out_feature_map[0] out
+			}
+			else{
+				// for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
+				// 	out_feature_map[i]->write(0.0);
+				// }
+				out_valid->write(0);
 			}
 			wait();
 		}
@@ -287,23 +308,18 @@ SC_MODULE(CONV_RELU_2)
 		const int PADDING = 2;
 
 		while(true){
-			out_valid->write(0);
+			// out_valid.write(0);
+			cout << "conv2" << endl;
+			cout << "mp1_valid num_available: " << in_valid->num_available() << endl;
+			cout << "mp1_result num_available: " << in_feature_map[0]->num_available() << endl;
 
 			//read weight and bias
-			//if ( rst.read() == 1 ) {
-				
-
-				// for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
-				// 	out_feature_map[i].write(0.0);
-				// }
-			//}
-			//conv2
-			if(in_valid->read()) {
-
-				weight2.clear();
-				bias2.clear();
-				
+			if ( rst.read() == 1 ) {
 				std::ifstream bfile("data/conv2_bias.txt");
+				if (!bfile.is_open()) {
+				    std::cerr << "Unable to open bias2 file!" << std::endl;
+				    return;
+				}
 				double b_value;
 				int bcnt = 0;
 				while(bfile >> b_value) {
@@ -318,10 +334,23 @@ SC_MODULE(CONV_RELU_2)
 					weight2.push_back(w_value);
 					wcnt++;
 				}
-				
+				//for(int i=0; i<64; i++){
+				//	std::cout<<"weight_"<<i<<": "<<weight1[i]<<std::endl;
+				//}
 
 				wfile.close();
 				bfile.close();
+
+				// for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
+				// 	out_feature_map[i].write(0.0);
+				// }
+				out_valid->write(0);
+			}
+			//conv2
+			else if(in_valid->read()) {
+				//for(int i=0; i<64; i++){
+				//	std::cout<<"weight2_"<<i<<": "<<weight2[i]<<std::endl;
+				//}
 
 				int i_ptr, w_ptr;
 				int i_ptr_x, i_ptr_y;
@@ -332,7 +361,7 @@ SC_MODULE(CONV_RELU_2)
 				for(int j=0; j<46656; j++){
 					in_feature_map_tmp[j] = in_feature_map[j]->read();
 					if(j<100){
-						//  cout << "in_feature_map_tmp[" << j << "]: " << in_feature_map_tmp[j] << endl;
+						 //cout << "in_feature_map_tmp[" << j << "]: " << in_feature_map_tmp[j] << endl;
 					}
 				}
 
@@ -356,22 +385,31 @@ SC_MODULE(CONV_RELU_2)
 									}
 								}
 							}
-
+							cout << "idx: " << oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol << endl;
 							if((partial_sum + bias2[oc])>0){
 								partial_sum += bias2[oc];
 								// out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol] = (sc_fixed_fast<45,17>)(partial_sum);
 								out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol]->write((sc_fixed_fast<45,17>)partial_sum);
+								
+								//cout << "partial_sum" << partial_sum << endl;
 							}
 							else{
 								// out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol] = 0;
 								out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol]->write(0.0);
+								
 							}
 						}
 					}
 				}
 				out_valid->write(1);
-				cout << "\033[31mconv2 performed\033[0m" << endl;
+				cout << "conv2 performed" << endl;
 				//std::cout<<"conv2_result[0,0,0]"<<out_feature_map[0]<<std::endl;
+			}
+			else {
+				// for(int k=0; k<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; k++){
+				// 	out_feature_map[k]->write(0.0);
+				// }
+				out_valid->write(0);
 			}
 			wait();
 		}
@@ -420,16 +458,20 @@ SC_MODULE(MAX_POOLING_2)
 		//const int PADDING = 2;
 
 		while(true){
-			out_valid->write(0);
+			// out_valid.write(0);
+			cout << "maxpool2" << endl;
+			cout << "conv2_valid num_available: " << in_valid->num_available() << endl;
+			cout << "conv2_result num_available: " << in_feature_map[0]->num_available() << endl;
 
-			// if ( rst.read() == 1 ) {
+			if ( rst.read() == 1 ) {
 
-			// 	for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
-			// 		out_feature_map[i].write(0.0);
-			// 	}
-			// }
+				// for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
+				// 	out_feature_map[i]->write(0.0);
+				// }
+				out_valid->write(0);
+			}
 			//maxpool2
-			if(in_valid->read()) {
+			else if(in_valid->read()) {
 
 				int i_ptr, w_ptr;
 				int i_ptr_x, i_ptr_y;
@@ -440,7 +482,7 @@ SC_MODULE(MAX_POOLING_2)
 				for(int j=0; j<139968; j++){
 					in_feature_map_tmp[j] = in_feature_map[j]->read();
 					if(j<100){
-						// cout << "in_feature_map_tmp[" << j << "]: " << in_feature_map_tmp[j] << endl;
+						cout << "in_feature_map_tmp[" << j << "]: " << in_feature_map_tmp[j] << endl;
 					}
 				}
 
@@ -465,8 +507,14 @@ SC_MODULE(MAX_POOLING_2)
 					}
 				}
 				out_valid->write(1);
-				cout << "\033[31mmaxpool2 performed\033[0m" << endl;
+				cout << "maxpool2 performed" << endl;
 				//std::cout<<"mp2_result[0,0,0]"<<out_feature_map[0]<<std::endl;
+			}
+			else {
+				// for(int k=0; k<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; k++){
+				// 	out_feature_map[k].write(0.0);
+				// }
+				out_valid->write(0);
 			}
 			wait();
 		}
@@ -519,20 +567,14 @@ SC_MODULE(CONV_RELU_3)
 		const int PADDING = 1;
 
 		while(true){
-			out_valid->write(0);
+			// out_valid.write(0);
+			cout << "conv3" << endl;
+			cout << "mp2_valid num_available: " << in_valid->num_available() << endl;
+			cout << "mp2_result num_available: " << in_feature_map[0]->num_available() << endl;
+
 
 			//read weight and bias
-			// if ( rst.read() == 1 ) {
-			// 	for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
-			// 		out_feature_map[i].write(0.0);
-			// 	}
-			// }
-			//conv3
-			if(in_valid->read()) {
-
-				weight3.clear();
-				bias3.clear();
-
+			if ( rst.read() == 1 ) {
 				std::ifstream bfile("data/conv3_bias.txt");
 				if (!bfile.is_open()) {
 				    std::cerr << "Unable to open bias3 file!" << std::endl;
@@ -556,6 +598,17 @@ SC_MODULE(CONV_RELU_3)
 
 				wfile.close();
 				bfile.close();
+
+				// for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
+				// 	out_feature_map[i]->write(0.0);
+				// }
+				out_valid->write(0);
+			}
+			//conv3
+			else if(in_valid->read()) {
+				//for(int i=0; i<64; i++){
+				//	std::cout<<"weight3_"<<i<<": "<<weight3[i]<<std::endl;
+				//}
 
 				int i_ptr, w_ptr;
 				int i_ptr_x, i_ptr_y;
@@ -604,8 +657,14 @@ SC_MODULE(CONV_RELU_3)
 					}
 				}
 				out_valid->write(1);
-				cout << "\033[31mconv3 performed\033[0m" << endl;
+				cout << "conv3 performed" << endl;
 				//std::cout<<"conv3_result[0,0,0]"<<out_feature_map[0]<<std::endl;
+			}
+			else {
+				// for(int k=0; k<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; k++){
+				// 	out_feature_map[k]->write(0.0);
+				// }
+				out_valid->write(0);
 			}
 			wait();
 		}
@@ -658,21 +717,13 @@ SC_MODULE(CONV_RELU_4)
 		const int PADDING = 1;
 
 		while(true){
-			out_valid->write(0);
+			// out_valid->write(0);
+			cout << "conv4" << endl;
+			cout << "conv3_valid num_available: " << in_valid->num_available() << endl;
+			cout << "conv3_result num_available: " << in_feature_map[0]->num_available() << endl;
 
 			//read weight and bias
-			// if ( rst.read() == 1 ) {
-
-			// 	for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
-			// 		out_feature_map[i].write(0.0);
-			// 	}
-			// }
-			//conv4
-			if(in_valid->read()) {
-
-				weight4.clear();
-				bias4.clear();
-
+			if ( rst.read() == 1 ) {
 				std::ifstream bfile("data/conv4_bias.txt");
 				if (!bfile.is_open()) {
 				    std::cerr << "Unable to open bias4 file!" << std::endl;
@@ -695,6 +746,14 @@ SC_MODULE(CONV_RELU_4)
 
 				wfile.close();
 				bfile.close();
+
+				// for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
+				// 	out_feature_map[i]->write(0.0);
+				// }
+				out_valid->write(0);
+			}
+			//conv4
+			else if(in_valid->read()) {
 
 				int i_ptr, w_ptr;
 				int i_ptr_x, i_ptr_y;
@@ -743,8 +802,14 @@ SC_MODULE(CONV_RELU_4)
 					}
 				}
 				out_valid->write(1);
-				cout << "\033[31mconv4 performed\033[0m" << endl;
+				cout << "conv4 performed" << endl;
 				//std::cout<<"conv4_result[0,0,0]"<<out_feature_map[0]<<std::endl;
+			}
+			else {
+				// for(int k=0; k<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; k++){
+				// 	out_feature_map[k]->write(0.0);
+				// }
+				out_valid->write(0);
 			}
 			wait();
 		}
@@ -797,21 +862,13 @@ SC_MODULE(CONV_RELU_5)
 		const int PADDING = 1;
 
 		while(true){
-			out_valid->write(0);
+			// out_valid->write(0);
+			cout << "conv5" << endl;
+			cout << "conv4_valid num_available: " << in_valid->num_available() << endl;
+			cout << "conv4_result num_available: " << in_feature_map[0]->num_available() << endl;
 
 			//read weight and bias
-			// if ( rst.read() == 1 ) {
-
-			// 	for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
-			// 		out_feature_map[i].write(0.0);
-			// 	}
-			// }
-			//conv5
-			if(in_valid->read()) {
-
-				weight5.clear();
-				bias5.clear();
-
+			if ( rst.read() == 1 ) {
 				std::ifstream bfile("data/conv5_bias.txt");
 				if (!bfile.is_open()) {
 				    std::cerr << "Unable to open bias5 file!" << std::endl;
@@ -834,6 +891,14 @@ SC_MODULE(CONV_RELU_5)
 
 				wfile.close();
 				bfile.close();
+
+				// for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
+				// 	out_feature_map[i]->write(0.0);
+				// }
+				out_valid->write(0);
+			}
+			//conv5
+			else if(in_valid->read()) {
 
 				int i_ptr, w_ptr;
 				int i_ptr_x, i_ptr_y;
@@ -882,8 +947,14 @@ SC_MODULE(CONV_RELU_5)
 					}
 				}
 				out_valid->write(1);
-				cout << "\033[31mconv5 performed\033[0m" << endl;
+				cout << "conv5 performed" << endl;
 				//std::cout<<"conv5_result[0,0,0]"<<out_feature_map[0]<<std::endl;
+			}
+			else {
+				// for(int k=0; k<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; k++){
+				// 	out_feature_map[k]->write(0.0);
+				// }
+				out_valid->write(0);
 			}
 			wait();
 		}
@@ -932,16 +1003,20 @@ SC_MODULE(MAX_POOLING_3)
 		//const int PADDING = 2;
 
 		while(true){
-			out_valid->write(0);
+			// out_valid->write(0);
+			cout << "maxpool3" << endl;
+			cout << "conv5_valid num_available: " << in_valid->num_available() << endl;
+			cout << "conv5_result num_available: " << in_feature_map[0]->num_available() << endl;
 
-			// if ( rst.read() == 1 ) {
+			if ( rst.read() == 1 ) {
 
-			// 	for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
-			// 		out_feature_map[i].write(0.0);
-			// 	}
-			// }
+				// for(int i=0; i<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; i++){
+				// 	out_feature_map[i]->write(0.0);
+				// }
+				out_valid->write(0);
+			}
 			//maxpool3
-			if(in_valid->read()) {
+			else if(in_valid->read()) {
 
 				int i_ptr, w_ptr;
 				int i_ptr_x, i_ptr_y;
@@ -977,8 +1052,14 @@ SC_MODULE(MAX_POOLING_3)
 					}
 				}
 				out_valid->write(1);
-				cout << "\033[31mmaxpool3 performed\033[0m" << endl;
+				cout << "maxpool3 performed" << endl;
 				//std::cout<<"mp3_result[0,0,0]"<<out_feature_map[0]<<std::endl;
+			}
+			else {
+				// for(int k=0; k<OUT_CHANNELS*OUT_HEIGHT*OUT_WIDTH; k++){
+				// 	out_feature_map[k]->write(0.0);
+				// }
+				out_valid->write(0);
 			}
 			wait();
 		}
@@ -1025,21 +1106,13 @@ SC_MODULE(LINEAR_RELU_1)
 		const int OUT_CHANNELS = 4096;
 
 		while(true){
-			out_valid->write(0);
+			// out_valid->write(0);
+			cout << "fc6" << endl;
+			cout << "mp3_valid num_available: " << in_valid->num_available() << endl;
+			cout << "mp3_result num_available: " << in_feature_map[0]->num_available() << endl;
 
 			//read weight and bias
-			// if ( rst.read() == 1 ) {
-
-			// 	for(int i=0; i<OUT_CHANNELS; i++){
-			// 		out_feature_map[i].write(0.0);
-			// 	}
-			// }
-			//fc6 + RELU
-			if(in_valid->read()) {
-
-				weight6.clear();
-				bias6.clear();
-
+			if ( rst.read() == 1 ) {
 				std::ifstream bfile("data/fc6_bias.txt");
 				if (!bfile.is_open()) {
 				    std::cerr << "Unable to open bias6 file!" << std::endl;
@@ -1063,7 +1136,13 @@ SC_MODULE(LINEAR_RELU_1)
 				wfile.close();
 				bfile.close();
 
-
+				// for(int i=0; i<OUT_CHANNELS; i++){
+				// 	out_feature_map[i]->write(0.0);
+				// }
+				out_valid->write(0);
+			}
+			//fc6 + RELU
+			else if(in_valid->read()) {
 				double partial_sum;
 
 				vector<sc_fixed_fast<45,17>> in_feature_map_tmp(9216);
@@ -1092,8 +1171,14 @@ SC_MODULE(LINEAR_RELU_1)
 					}
 				}
 				out_valid->write(1);
-				cout << "\033[31mfc6 performed\033[0m" << endl;
+				cout << "fc6 performed" << endl;
 				//std::cout<<"fc6_result[0]"<<out_feature_map[0]<<std::endl;
+			}
+			else {
+				// for(int k=0; k<OUT_CHANNELS; k++){
+				// 	out_feature_map[k]->write(0.0);
+				// }
+				out_valid->write(0);
 			}
 			wait();
 		}
@@ -1137,21 +1222,13 @@ SC_MODULE(LINEAR_RELU_2)
 		const int OUT_CHANNELS = 4096;
 
 		while(true){
-			out_valid->write(0);
+			// out_valid->write(0);
+			cout << "fc7" << endl;
+			cout << "fc6_valid num_available: " << in_valid->num_available() << endl;
+			cout << "fc6_result num_available: " << in_feature_map[0]->num_available() << endl;
 
 			//read weight and bias
-			// if ( rst.read() == 1 ) {
-
-			// 	for(int i=0; i<OUT_CHANNELS; i++){
-			// 		out_feature_map[i].write(0.0);
-			// 	}
-			// }
-			//fc7 + RELU
-			if(in_valid->read()) {
-
-				weight7.clear();
-				bias7.clear();
-
+			if ( rst.read() == 1 ) {
 				std::ifstream bfile("data/fc7_bias.txt");
 				if (!bfile.is_open()) {
 				    std::cerr << "Unable to open bias7 file!" << std::endl;
@@ -1175,6 +1252,13 @@ SC_MODULE(LINEAR_RELU_2)
 				wfile.close();
 				bfile.close();
 
+				// for(int i=0; i<OUT_CHANNELS; i++){
+				// 	out_feature_map[i].write(0.0);
+				// }
+				out_valid->write(0);
+			}
+			//fc7 + RELU
+			else if(in_valid->read()) {
 				double partial_sum;
 
 				vector<sc_fixed_fast<45,17>> in_feature_map_tmp(4096);
@@ -1203,8 +1287,13 @@ SC_MODULE(LINEAR_RELU_2)
 					}
 				}
 				out_valid->write(1);
-				cout << "\033[31mfc7 performed\033[0m" << endl;
 				//std::cout<<"fc7_result[0]"<<out_feature_map[0]<<std::endl;
+			}
+			else {
+				// for(int k=0; k<OUT_CHANNELS; k++){
+				// 	out_feature_map[k]->write(0.0);
+				// }
+				out_valid->write(0);
 			}
 			wait();
 		}
@@ -1247,21 +1336,13 @@ SC_MODULE(LINEAR_3)
 		const int OUT_CHANNELS = 1000;
 
 		while(true){
-			out_valid.write(0);
+			// out_valid->write(0);
+			cout << "fc8" << endl;
+			cout << "fc7_valid num_available: " << in_valid->num_available() << endl;
+			cout << "fc7_result num_available: " << in_feature_map[0]->num_available() << endl;
 
 			//read weight and bias
-			// if ( rst.read() == 1 ) {
-
-			// 	for(int i=0; i<OUT_CHANNELS; i++){
-			// 		out_feature_map[i].write(0.0);
-			// 	}
-			// }
-			//fc8
-			if(in_valid->read()) {
-
-				weight8.clear();
-				bias8.clear();
-
+			if ( rst.read() == 1 ) {
 				std::ifstream bfile("data/fc8_bias.txt");
 				if (!bfile.is_open()) {
 				    std::cerr << "Unable to open bias8 file!" << std::endl;
@@ -1285,6 +1366,13 @@ SC_MODULE(LINEAR_3)
 				wfile.close();
 				bfile.close();
 
+				// for(int i=0; i<OUT_CHANNELS; i++){
+				// 	out_feature_map[i].write(0.0);
+				// }
+				out_valid.write(0);
+			}
+			//fc8
+			else if(in_valid->read()) {
 				double partial_sum;
 
 				vector<sc_fixed_fast<45,17>> in_feature_map_tmp(4096);
@@ -1307,8 +1395,14 @@ SC_MODULE(LINEAR_3)
 
 				}
 				out_valid.write(1);
-				cout << "\033[31mfc8 performed\033[0m" << endl;
 				//std::cout<<"fc7_result[0]"<<out_feature_map[0]<<std::endl;
+			}
+			else {
+				// for(int k=0; k<OUT_CHANNELS; k++){
+				// 	out_feature_map[k]->write(0.0);
+				// }
+				out_valid.write(0);
+			
 			}
 			wait();
 		}
