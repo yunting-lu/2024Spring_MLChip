@@ -32,20 +32,20 @@ void Pattern::run() {
 
 		in_valid = 1;
 	}
-	// else if(cycle == 3){
-	// 	//* Open the input file
-    // 	std::ifstream file("data/dog.txt");
-	// 	double value;
-	// 	int cnt = 0;
-	// 	while(file >> value) {
-	// 		image[cnt] = (sc_fixed_fast<45,17>) (value);
-	// 		cnt++;
-	// 	}
+	else if(cycle == 3){
+		//* Open the input file
+    	std::ifstream file("data/dog.txt");
+		double value;
+		int cnt = 0;
+		while(file >> value) {
+			image[cnt] = (sc_fixed_fast<45,17>) (value);
+			cnt++;
+		}
 
-    // 	file.close();
+    	file.close();
 
-	// 	in_valid = 1;
-	// }
+		in_valid = 1;
+	}
 	else {
 		in_valid = 0;
 	}

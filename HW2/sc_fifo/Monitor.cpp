@@ -8,18 +8,18 @@
 using namespace std;
 
 void Monitor:: run() {
-	
+
 	if ( rst.read() == 1 ) {
 		cout << "reset" << endl;
 		//read imagenet_classes.txt
 		ifstream file("data/imagenet_classes.txt");
 		string class_name;
-		
+
 		while(getline(file, class_name)){
 			imagenet_classes.push_back(class_name);
 		}
 	}
-	   
+
 	else if ( cycle != 0 ){
 		cout << "------------------------------------------------------------" << endl;
 		cout << "cycle: " << cycle << endl;
@@ -40,7 +40,7 @@ void Monitor:: run() {
 
 	//SoftMax
 	if(linear3_valid.read() == 1){
-		
+
 		double sum = 0;
 		vector<double> softmax_result(1000);
 		vector<pair<int, double>> softmax_result_pair(1000);
@@ -56,7 +56,7 @@ void Monitor:: run() {
 		sort(softmax_result_pair.begin(), softmax_result_pair.end(), [](const pair<int, double> &left, const pair<int, double> &right) {
 			return left.second > right.second;
 		});
-		
+
 
 		cout << " Top \t idx \t val \t        possibility \t class name" << endl;
 		cout << "------------------------------------------------------------" << endl;
@@ -66,7 +66,6 @@ void Monitor:: run() {
 		cout << "------------------------------------------------------------" << endl;
 	}
 
-	
+
 	cycle ++;
 }
-

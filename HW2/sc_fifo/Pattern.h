@@ -1,7 +1,7 @@
 #define SC_INCLUDE_FX
 #include <systemc.h>
 #include <iostream>
-#define CYCLE 50
+#define CYCLE 16
 
 using namespace std;
 
