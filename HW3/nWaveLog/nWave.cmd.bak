@@ -1,0 +1,19 @@
+wvSetPosition -win $_nWave1 {("G1" 0)}
+wvOpenFile -win $_nWave1 {/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb}
+wvGetSignalOpen -win $_nWave1
+wvGetSignalSetScope -win $_nWave1 "/SystemC"
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvReloadFile -win $_nWave1
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvReloadFile -win $_nWave1
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvReloadFile -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvOpenFile -win $_nWave1 {/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb}
+wvGetSignalOpen -win $_nWave1
+wvGetSignalSetScope -win $_nWave1 "/SystemC"
+wvExit

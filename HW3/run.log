@@ -1,0 +1,94 @@
+Core 0 init
+Core 1 init
+Core 2 init
+Core 3 init
+Core 4 init
+Core 5 init
+Core 6 init
+Core 7 init
+Core 8 init
+Core 9 init
+Core 10 init
+Core 11 init
+Core 12 init
+Core 13 init
+Core 14 init
+Core 15 init
+
+Info: (I702) default timescale unit used for tracing: 1 ps (wave.vcd)
+Core 0 is getting packet, pat_num = 1, flit size: 74
+Core 1 is getting packet, pat_num = 1, flit size: 38
+Core 2 is getting packet, pat_num = 1, flit size: 88
+Core 4 is getting packet, pat_num = 1, flit size: 82
+Core 5 is getting packet, pat_num = 1, flit size: 84
+Core 6 is getting packet, pat_num = 1, flit size: 39
+Core 7 is getting packet, pat_num = 1, flit size: 80
+Core 8 is getting packet, pat_num = 1, flit size: 29
+Core 9 is getting packet, pat_num = 1, flit size: 9
+Core 10 is getting packet, pat_num = 1, flit size: 30
+Core 11 is getting packet, pat_num = 1, flit size: 93
+Core 12 is getting packet, pat_num = 1, flit size: 64
+Core 13 is getting packet, pat_num = 1, flit size: 39
+Core 14 is getting packet, pat_num = 1, flit size: 72
+Core 15 is getting packet, pat_num = 1, flit size: 34
+Core_9: p deleted
+[31mcore 13's check point!!![0m at time 300 ns From: 9, To: 13
+[31mchecked[0m
+Core_8: p deleted
+[31mcore 9's check point!!![0m at time 900 ns From: 8, To: 9
+[31mchecked[0m
+Core_10: p deleted
+[31mcore 7's check point!!![0m at time 940 ns From: 10, To: 7
+[31mchecked[0m
+Core_15: p deleted
+[31mcore 2's check point!!![0m at time 1060 ns From: 15, To: 2
+[31mchecked[0m
+Core_1: p deleted
+[31mcore 6's check point!!![0m at time 1180 ns From: 1, To: 6
+[31mchecked[0m
+Core_13: p deleted
+Core 13 is getting packet, pat_num = 2, flit size: 13
+[31mcore 1's check point!!![0m at time 1200 ns From: 13, To: 1
+[31mchecked[0m
+Core_12: p deleted
+[31mcore 11's check point!!![0m at time 1960 ns From: 12, To: 11
+[31mchecked[0m
+Core_14: p deleted
+[31mcore 15's check point!!![0m at time 2190 ns From: 14, To: 15
+[31mchecked[0m
+Core_7: p deleted
+[31mcore 8's check point!!![0m at time 2440 ns From: 7, To: 8
+[31mchecked[0m
+Core_4: p deleted
+[31mcore 5's check point!!![0m at time 2490 ns From: 4, To: 5
+[31mchecked[0m
+Core_5: p deleted
+[31mcore 4's check point!!![0m at time 2550 ns From: 5, To: 4
+[31mchecked[0m
+Core_13: p deleted
+[31mcore 3's check point!!![0m at time 2590 ns From: 13, To: 3
+[31mchecked[0m
+Core_2: p deleted
+[31mcore 14's check point!!![0m at time 2670 ns From: 2, To: 14
+[31mchecked[0m
+Core_11: p deleted
+[31mcore 0's check point!!![0m at time 2840 ns From: 11, To: 0
+[31mchecked[0m
+Core_0: p deleted
+[31mcore 10's check point!!![0m at time 3410 ns From: 0, To: 10
+[31mchecked[0m
+Core_6: p deleted
+[31mcore 12's check point!!![0m at time 4 us From: 6, To: 12
+
+  ============================                  
+  +                          +         |\__|\ 
+  +   [0m[1;32mCongratulations !![0m     +        / O.O  |  
+  +                          +      /_____   |  
+  +   Simulation completed   +     /^ ^ ^ \  | 
+  +   at 400 th cycle        +    |^ ^ ^ ^ |w| 
+  +                          +     \m___m__|_| 
+  ============================                  
+[31mchecked[0m
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+close vcd file
