@@ -1,142 +1,150 @@
+wvRestoreSignal -win $_nWave1 \
+           "/RAID2/COURSE/mlchip/mlchip098/HW3_upload_v1/signal.rc" \
+           -overWriteAutoAlias on -appendSignals on
 wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
            "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvSetPosition -win $_nWave1 {("G1" 0)}
-wvOpenFile -win $_nWave1 {/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb}
-wvGetSignalOpen -win $_nWave1
-wvGetSignalSetScope -win $_nWave1 "/SystemC"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/core_0"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/core_1"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/core_2"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/core_3"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/core_5"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/core_8"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/core_5"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/core_3"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/router_6"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/router_4"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/core_14"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/router_8"
-wvGetSignalClose -win $_nWave1
+wvSelectSignal -win $_nWave1 {( "core0" 6 )} 
+wvSelectSignal -win $_nWave1 {( "core0" 6 7 8 )} 
+wvSetPosition -win $_nWave1 {("core0" 6)}
+wvSetPosition -win $_nWave1 {("core0" 2)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("core0" 2)}
+wvSetPosition -win $_nWave1 {("core0" 5)}
+wvSelectSignal -win $_nWave1 {( "router0" 3 )} 
+wvSelectSignal -win $_nWave1 {( "router0" 5 6 )} 
+wvSetPosition -win $_nWave1 {("router0" 5)}
+wvSelectSignal -win $_nWave1 {( "router0" 5 )} 
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 5)}
 wvResizeWindow -win $_nWave1 0 23 1536 793
-wvGetSignalOpen -win $_nWave1
-wvGetSignalSetScope -win $_nWave1 "/SystemC"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/router_8"
-wvGetSignalSetScope -win $_nWave1 "/SystemC/core_0"
-wvSetPosition -win $_nWave1 {("G1" 3)}
-wvSetPosition -win $_nWave1 {("G1" 3)}
-wvAddSignal -win $_nWave1 -clear
-wvAddSignal -win $_nWave1 -group {"G1" \
-{/SystemC/core_0/ack_tx} \
-{/SystemC/core_0/flit_tx\[33:0\]} \
-{/SystemC/core_0/req_tx} \
-}
-wvAddSignal -win $_nWave1 -group {"G2" \
-}
-wvSelectSignal -win $_nWave1 {( "G1" 1 2 3 )} 
-wvSetPosition -win $_nWave1 {("G1" 3)}
-wvSetPosition -win $_nWave1 {("G1" 6)}
-wvSetPosition -win $_nWave1 {("G1" 6)}
-wvAddSignal -win $_nWave1 -clear
-wvAddSignal -win $_nWave1 -group {"G1" \
-{/SystemC/core_0/ack_tx} \
-{/SystemC/core_0/flit_tx\[33:0\]} \
-{/SystemC/core_0/req_tx} \
-{/SystemC/core_0/ack_rx} \
-{/SystemC/core_0/flit_rx\[33:0\]} \
-{/SystemC/core_0/req_rx} \
-}
-wvAddSignal -win $_nWave1 -group {"G2" \
-}
-wvSelectSignal -win $_nWave1 {( "G1" 4 5 6 )} 
-wvSetPosition -win $_nWave1 {("G1" 6)}
-wvSetPosition -win $_nWave1 {("G1" 6)}
-wvSetPosition -win $_nWave1 {("G1" 6)}
-wvAddSignal -win $_nWave1 -clear
-wvAddSignal -win $_nWave1 -group {"G1" \
-{/SystemC/core_0/ack_tx} \
-{/SystemC/core_0/flit_tx\[33:0\]} \
-{/SystemC/core_0/req_tx} \
-{/SystemC/core_0/ack_rx} \
-{/SystemC/core_0/flit_rx\[33:0\]} \
-{/SystemC/core_0/req_rx} \
-}
-wvAddSignal -win $_nWave1 -group {"G2" \
-}
-wvSelectSignal -win $_nWave1 {( "G1" 4 5 6 )} 
-wvSetPosition -win $_nWave1 {("G1" 6)}
-wvGetSignalClose -win $_nWave1
-wvZoomOut -win $_nWave1
-wvZoomOut -win $_nWave1
+wvSetCursor -win $_nWave1 109395.332455 -snap {("core0" 3)}
 wvResizeWindow -win $_nWave1 0 23 1536 793
-wvSelectSignal -win $_nWave1 {( "G1" 3 )} 
+wvZoom -win $_nWave1 89884.170552 144896.890321
 wvZoomOut -win $_nWave1
 wvZoomOut -win $_nWave1
+wvSelectSignal -win $_nWave1 {( "core0" 5 )} 
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollDown -win $_nWave1 0
+wvScrollDown -win $_nWave1 0
+wvScrollDown -win $_nWave1 0
+wvScrollDown -win $_nWave1 0
+wvScrollDown -win $_nWave1 0
+wvScrollDown -win $_nWave1 0
+wvSetCursor -win $_nWave1 220681.503484 -snap {("core0" 3)}
+wvSetCursor -win $_nWave1 222080.873145 -snap {("router0" 3)}
+wvSelectSignal -win $_nWave1 {( "router0" 5 )} 
+wvResizeWindow -win $_nWave1 0 23 1536 793
+wvResizeWindow -win $_nWave1 0 23 1536 793
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvSelectSignal -win $_nWave1 {( "router0" 29 )} 
+wvSetPosition -win $_nWave1 {("router0" 29)}
+wvSetPosition -win $_nWave1 {("router0" 32)}
+wvSetPosition -win $_nWave1 {("router0" 33)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 33)}
+wvSelectSignal -win $_nWave1 {( "router0" 39 )} 
+wvSetPosition -win $_nWave1 {("router0" 39)}
+wvSetPosition -win $_nWave1 {("router0" 36)}
+wvSetPosition -win $_nWave1 {("router0" 34)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 34)}
+wvSetPosition -win $_nWave1 {("router0" 35)}
+wvSelectSignal -win $_nWave1 {( "router0" 38 )} 
+wvScrollUp -win $_nWave1 16
+wvSelectSignal -win $_nWave1 {( "core0" 2 )} 
+wvSetPosition -win $_nWave1 {("core0" 2)}
+wvSetPosition -win $_nWave1 {("core0" 7)}
+wvSetPosition -win $_nWave1 {("core0" 8)}
+wvSetPosition -win $_nWave1 {("core0" 4)}
+wvSetPosition -win $_nWave1 {("core0" 1)}
+wvSetPosition -win $_nWave1 {("core0" 0)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("core0" 0)}
+wvSetPosition -win $_nWave1 {("core0" 1)}
+wvSelectSignal -win $_nWave1 {( "core0" 1 )} 
+wvSelectSignal -win $_nWave1 {( "router0" 8 )} 
+wvSetPosition -win $_nWave1 {("router0" 8)}
+wvSetPosition -win $_nWave1 {("router0" 7)}
+wvSetPosition -win $_nWave1 {("router0" 8)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 8)}
+wvSelectSignal -win $_nWave1 {( "router0" 8 )} 
+wvSelectSignal -win $_nWave1 {( "core0" 2 )} 
+wvSetPosition -win $_nWave1 {("core0" 2)}
+wvSetPosition -win $_nWave1 {("core0" 4)}
+wvSetPosition -win $_nWave1 {("core0" 5)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("core0" 5)}
+wvSelectSignal -win $_nWave1 {( "router0" 6 )} 
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvSetPosition -win $_nWave1 {("router0" 5)}
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvSelectSignal -win $_nWave1 {( "router0" 6 )} 
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 11
+wvSelectSignal -win $_nWave1 {( "router0" 29 )} 
+wvSetPosition -win $_nWave1 {("router0" 29)}
+wvSetPosition -win $_nWave1 {("router0" 36)}
+wvSetPosition -win $_nWave1 {("router0" 39)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 39)}
+wvSelectSignal -win $_nWave1 {( "router0" 35 )} 
+wvSetPosition -win $_nWave1 {("router0" 35)}
+wvSetPosition -win $_nWave1 {("router0" 39)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 39)}
 wvZoomOut -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
-           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvReloadFile -win $_nWave1
-wvZoomOut -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
-           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvReloadFile -win $_nWave1
-wvZoomOut -win $_nWave1
-wvZoomOut -win $_nWave1
-wvZoomOut -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
-           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvReloadFile -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
-           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvReloadFile -win $_nWave1
-wvZoomOut -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
-           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvReloadFile -win $_nWave1
-wvZoomOut -win $_nWave1
-wvZoomOut -win $_nWave1
-wvZoomOut -win $_nWave1
+wvSelectSignal -win $_nWave1 {( "router0" 34 )} 
+wvSelectSignal -win $_nWave1 {( "router0" 32 )} 
+wvScrollUp -win $_nWave1 19
+wvSelectSignal -win $_nWave1 {( "core0" 5 )} 
+wvAddSignal -win $_nWave1 "/SystemC/clk"
+wvSetPosition -win $_nWave1 {("router0" 39)}
+wvSetPosition -win $_nWave1 {("router0" 40)}
+wvSetPosition -win $_nWave1 {("router0" 36)}
+wvScrollDown -win $_nWave1 1
+wvSetPosition -win $_nWave1 {("router0" 31)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 31)}
+wvSetPosition -win $_nWave1 {("router0" 32)}
+wvSelectSignal -win $_nWave1 {( "router0" 40 )} 
 wvZoomIn -win $_nWave1
-wvZoomIn -win $_nWave1
-wvZoomOut -win $_nWave1
-wvZoomOut -win $_nWave1
-wvZoomOut -win $_nWave1
-wvZoomOut -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
-           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvReloadFile -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
-           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvReloadFile -win $_nWave1
-wvZoomIn -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
-           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvReloadFile -win $_nWave1
-wvZoomOut -win $_nWave1
-wvZoomIn -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
-           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvReloadFile -win $_nWave1
-wvZoomOut -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
-           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvReloadFile -win $_nWave1
+wvSelectSignal -win $_nWave1 {( "router0" 41 )} 
+wvSetPosition -win $_nWave1 {("router0" 41)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 41)}
+wvSelectSignal -win $_nWave1 {( "router0" 41 )} 
+wvExit

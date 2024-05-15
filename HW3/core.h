@@ -42,7 +42,7 @@ SC_MODULE( Core ) {
         core_id = id;
 
         pe.init(core_id);
-        cout << "Core " << core_id << " init" << endl;
+        // cout << "Core " << core_id << " init" << endl;
 
         this->tf = tf;
         SC_THREAD(do_it);
@@ -65,12 +65,10 @@ SC_MODULE( Core ) {
     sc_lv<32> floatToLogicvector(float d) {
         // Convert float to IEEE 754 logicfield
         sc_dt::scfx_ieee_float id(d);
-
         // Prepare parts
         bool               sgn = id.negative();
         sc_dt::sc_uint<8>  exp = id.exponent();
         sc_dt::sc_uint<23> mnt = id.mantissa();
-
         // Concatenate parts to bitvector
         // sc_lv<32> lv = (sgn, exp, mnt);
         sc_lv<32> lv;
@@ -86,13 +84,11 @@ SC_MODULE( Core ) {
         bool sgn = lv[31].to_bool();
         sc_uint<8> exp = lv.range(30, 23).to_uint();
         sc_uint<23> mnt = lv.range(22, 0).to_uint();
-
         // Convert to IEEE 754 floating-point format
         sc_dt::scfx_ieee_float id;
         id.negative(sgn);
         id.exponent(exp);
         id.mantissa(mnt);
-
         // Convert to float
         float result = id; //.to_float()
 
@@ -122,7 +118,7 @@ SC_MODULE( Core ) {
                 if(p != nullptr && get_p==0){
                     flit.clear();
                     pat_num++;
-                    cout << "Core " << core_id << " is getting packet, pat_num = " << pat_num << ", ";
+                    // cout << "Core " << core_id << " is getting packet, pat_num = " << pat_num << ", ";
                     for(int i = 0; i < (p->datas.size())+1; i++){
                         if(i == 0){ //header
                             temp[33] = 1;
@@ -145,8 +141,7 @@ SC_MODULE( Core ) {
                         flit.push_back(temp);
                     }
                     // output header
-                    // cout << "\033[31mCore " << core_id << " is sending packet\033[0m" << endl;
-                    cout << "flit size: " << flit.size() << endl;
+                    // cout << "flit size: " << flit.size() << endl;
                     req_tx.write(1);
                     flit_tx.write(flit[count]);
                     get_p = 1;
@@ -163,7 +158,7 @@ SC_MODULE( Core ) {
                     get_p = 0;
                     req_tx.write(0);
                     flit_tx.write(0);
-                    cout << "Core_" << core_id << ": p deleted" << endl;
+                    // cout << "Core_" << core_id << ": p deleted" << endl;
                 }
 
                 //* rx
@@ -197,15 +192,15 @@ SC_MODULE( Core ) {
                     else{
                         (p_rx->datas).push_back(logicvectorToFloat(flit_rec.range(31, 0)));
                         if(flit_rec[32]==1){ //tail
-                            cout << "\033[31mcore " << core_id << "'s check point!!!\033[0m" << " ";
-                            cout << "at time " << sc_time_stamp() << " ";
-                            cout<<"From: "<<p_rx->source_id<<", ";
-                            cout<<"To: "<<p_rx->dest_id<<endl;
+                            // cout << "\033[31mcore " << core_id << "'s check point!!!\033[0m" << " ";
+                            // cout << "at time " << sc_time_stamp() << " ";
+                            // cout<<"From: "<<p_rx->source_id<<", ";
+                            // cout<<"To: "<<p_rx->dest_id<<endl;
                             // for(int inx=0;inx<p_rx->datas.size();inx++){
                             //     cout<< p_rx->datas[inx]<<" ";
                             // }
                             pe.check_packet(p_rx);
-                            cout << "\033[31mchecked\033[0m" << endl;
+                            // cout << "\033[31mchecked\033[0m" << endl;
                         }
                     }
                 }        

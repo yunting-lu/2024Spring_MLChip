@@ -1,19 +1,789 @@
-wvSetPosition -win $_nWave1 {("G1" 0)}
-wvOpenFile -win $_nWave1 {/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb}
-wvGetSignalOpen -win $_nWave1
-wvGetSignalSetScope -win $_nWave1 "/SystemC"
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvReloadFile -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvReloadFile -win $_nWave1
-wvDisplayGridCount -win $_nWave1 -off
-wvGetSignalClose -win $_nWave1
-wvReloadFile -win $_nWave1
+wvRestoreSignal -win $_nWave1 "/RAID2/COURSE/mlchip/mlchip098/HW3/signal.rc" \
+           -overWriteAutoAlias on -appendSignals on
 wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
            "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
-wvOpenFile -win $_nWave1 {/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb}
 wvGetSignalOpen -win $_nWave1
-wvGetSignalSetScope -win $_nWave1 "/SystemC"
-wvExit
+wvGetSignalSetScope -win $_nWave1 "/SystemC/core_0"
+wvGetSignalSetScope -win $_nWave1 "/SystemC/router_0"
+wvGetSignalClose -win $_nWave1
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvReloadFile -win $_nWave1
+wvGetSignalOpen -win $_nWave1
+wvGetSignalClose -win $_nWave1
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvReloadFile -win $_nWave1
+wvGetSignalOpen -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 45)}
+wvSetPosition -win $_nWave1 {("router0" 45)}
+wvAddSignal -win $_nWave1 -clear
+wvAddSignal -win $_nWave1 -group {"core0" \
+{/SystemC/clk} \
+{/SystemC/rst} \
+{/SystemC/core_0/ack_tx} \
+{/SystemC/core_0/flit_tx\[33:0\]} \
+{/SystemC/core_0/req_tx} \
+{/SystemC/core_0/ack_rx} \
+{/SystemC/core_0/flit_rx\[33:0\]} \
+{/SystemC/core_0/req_rx} \
+}
+wvAddSignal -win $_nWave1 -group {"router0" \
+{/SystemC/router_0/in_req_0} \
+{/SystemC/router_0/in_req_1} \
+{/SystemC/router_0/in_req_2} \
+{/SystemC/router_0/in_req_3} \
+{/SystemC/router_0/in_req_4} \
+{/SystemC/router_0/in_flit_0\[33:0\]} \
+{/SystemC/router_0/in_flit_1\[33:0\]} \
+{/SystemC/router_0/in_flit_2\[33:0\]} \
+{/SystemC/router_0/in_flit_3\[33:0\]} \
+{/SystemC/router_0/in_flit_4\[33:0\]} \
+{/SystemC/router_0/in_buffer_0\[33:0\]} \
+{/SystemC/router_0/in_buffer_1\[33:0\]} \
+{/SystemC/router_0/in_buffer_2\[33:0\]} \
+{/SystemC/router_0/in_buffer_3\[33:0\]} \
+{/SystemC/router_0/in_buffer_4\[33:0\]} \
+{/SystemC/router_0/dir_ready_0} \
+{/SystemC/router_0/dir_ready_1} \
+{/SystemC/router_0/dir_ready_2} \
+{/SystemC/router_0/dir_ready_3} \
+{/SystemC/router_0/dir_ready_4} \
+{/SystemC/router_0/out_ack_0} \
+{/SystemC/router_0/out_ack_1} \
+{/SystemC/router_0/out_ack_2} \
+{/SystemC/router_0/out_ack_3} \
+{/SystemC/router_0/out_ack_4} \
+{/SystemC/router_0/out_req_0} \
+{/SystemC/router_0/out_req_1} \
+{/SystemC/router_0/out_req_2} \
+{/SystemC/router_0/out_req_3} \
+{/SystemC/router_0/out_req_4} \
+{/SystemC/router_0/out_flit_0\[33:0\]} \
+{/SystemC/router_0/out_flit_1\[33:0\]} \
+{/SystemC/router_0/out_flit_2\[33:0\]} \
+{/SystemC/router_0/out_flit_3\[33:0\]} \
+{/SystemC/router_0/out_flit_4\[33:0\]} \
+{/SystemC/router_0/in_ack_0} \
+{/SystemC/router_0/in_ack_1} \
+{/SystemC/router_0/in_ack_2} \
+{/SystemC/router_0/in_ack_3} \
+{/SystemC/router_0/in_ack_4} \
+{/SystemC/router_0/chout_busy_0} \
+{/SystemC/router_0/chout_busy_1} \
+{/SystemC/router_0/chout_busy_2} \
+{/SystemC/router_0/chout_busy_3} \
+{/SystemC/router_0/chout_busy_4} \
+}
+wvAddSignal -win $_nWave1 -group {"G3" \
+}
+wvSelectSignal -win $_nWave1 {( "router0" 41 42 43 44 45 )} 
+wvSetPosition -win $_nWave1 {("router0" 45)}
+wvSetPosition -win $_nWave1 {("router0" 45)}
+wvSetPosition -win $_nWave1 {("router0" 45)}
+wvAddSignal -win $_nWave1 -clear
+wvAddSignal -win $_nWave1 -group {"core0" \
+{/SystemC/clk} \
+{/SystemC/rst} \
+{/SystemC/core_0/ack_tx} \
+{/SystemC/core_0/flit_tx\[33:0\]} \
+{/SystemC/core_0/req_tx} \
+{/SystemC/core_0/ack_rx} \
+{/SystemC/core_0/flit_rx\[33:0\]} \
+{/SystemC/core_0/req_rx} \
+}
+wvAddSignal -win $_nWave1 -group {"router0" \
+{/SystemC/router_0/in_req_0} \
+{/SystemC/router_0/in_req_1} \
+{/SystemC/router_0/in_req_2} \
+{/SystemC/router_0/in_req_3} \
+{/SystemC/router_0/in_req_4} \
+{/SystemC/router_0/in_flit_0\[33:0\]} \
+{/SystemC/router_0/in_flit_1\[33:0\]} \
+{/SystemC/router_0/in_flit_2\[33:0\]} \
+{/SystemC/router_0/in_flit_3\[33:0\]} \
+{/SystemC/router_0/in_flit_4\[33:0\]} \
+{/SystemC/router_0/in_buffer_0\[33:0\]} \
+{/SystemC/router_0/in_buffer_1\[33:0\]} \
+{/SystemC/router_0/in_buffer_2\[33:0\]} \
+{/SystemC/router_0/in_buffer_3\[33:0\]} \
+{/SystemC/router_0/in_buffer_4\[33:0\]} \
+{/SystemC/router_0/dir_ready_0} \
+{/SystemC/router_0/dir_ready_1} \
+{/SystemC/router_0/dir_ready_2} \
+{/SystemC/router_0/dir_ready_3} \
+{/SystemC/router_0/dir_ready_4} \
+{/SystemC/router_0/out_ack_0} \
+{/SystemC/router_0/out_ack_1} \
+{/SystemC/router_0/out_ack_2} \
+{/SystemC/router_0/out_ack_3} \
+{/SystemC/router_0/out_ack_4} \
+{/SystemC/router_0/out_req_0} \
+{/SystemC/router_0/out_req_1} \
+{/SystemC/router_0/out_req_2} \
+{/SystemC/router_0/out_req_3} \
+{/SystemC/router_0/out_req_4} \
+{/SystemC/router_0/out_flit_0\[33:0\]} \
+{/SystemC/router_0/out_flit_1\[33:0\]} \
+{/SystemC/router_0/out_flit_2\[33:0\]} \
+{/SystemC/router_0/out_flit_3\[33:0\]} \
+{/SystemC/router_0/out_flit_4\[33:0\]} \
+{/SystemC/router_0/in_ack_0} \
+{/SystemC/router_0/in_ack_1} \
+{/SystemC/router_0/in_ack_2} \
+{/SystemC/router_0/in_ack_3} \
+{/SystemC/router_0/in_ack_4} \
+{/SystemC/router_0/chout_busy_0} \
+{/SystemC/router_0/chout_busy_1} \
+{/SystemC/router_0/chout_busy_2} \
+{/SystemC/router_0/chout_busy_3} \
+{/SystemC/router_0/chout_busy_4} \
+}
+wvAddSignal -win $_nWave1 -group {"G3" \
+}
+wvSelectSignal -win $_nWave1 {( "router0" 41 42 43 44 45 )} 
+wvSetPosition -win $_nWave1 {("router0" 45)}
+wvGetSignalClose -win $_nWave1
+wvSelectSignal -win $_nWave1 {( "router0" 44 )} 
+wvZoomOut -win $_nWave1
+wvSetCursor -win $_nWave1 2840304.809858 -snap {("router0" 45)}
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanLeft -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvPanRight -win $_nWave1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvReloadFile -win $_nWave1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 1
+wvSelectSignal -win $_nWave1 {( "router0" 29 )} 
+wvZoomOut -win $_nWave1
+wvZoomOut -win $_nWave1
+wvZoomIn -win $_nWave1
+wvZoomIn -win $_nWave1
+wvZoomIn -win $_nWave1
+wvZoomOut -win $_nWave1
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvReloadFile -win $_nWave1
+wvZoomOut -win $_nWave1
+wvZoomOut -win $_nWave1
+wvZoomOut -win $_nWave1
+wvZoomOut -win $_nWave1
+wvZoomIn -win $_nWave1
+wvZoomOut -win $_nWave1
+wvZoomOut -win $_nWave1
+wvZoomOut -win $_nWave1
+wvZoomOut -win $_nWave1
+wvZoomOut -win $_nWave1
+wvZoomOut -win $_nWave1
+wvSelectSignal -win $_nWave1 {( "router0" 10 )} 
+wvSelectSignal -win $_nWave1 {( "router0" 21 )} 
+wvSetCursor -win $_nWave1 129698.486056 -snap {("router0" 21)}
+wvSetCursor -win $_nWave1 103840.876494 -snap {("router0" 16)}
+wvSetPosition -win $_nWave1 {("router0" 21)}
+wvSetPosition -win $_nWave1 {("router0" 7)}
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvSetPosition -win $_nWave1 {("router0" 7)}
+wvSelectSignal -win $_nWave1 {( "router0" 12 )} 
+wvSetPosition -win $_nWave1 {("router0" 12)}
+wvSetPosition -win $_nWave1 {("router0" 8)}
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvSetPosition -win $_nWave1 {("router0" 7)}
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvScrollUp -win $_nWave1 1
+wvSelectSignal -win $_nWave1 {( "router0" 5 )} 
+wvSelectSignal -win $_nWave1 {( "router0" 8 )} 
+wvScrollDown -win $_nWave1 1
+wvScrollDown -win $_nWave1 2
+wvScrollDown -win $_nWave1 5
+wvScrollDown -win $_nWave1 6
+wvScrollUp -win $_nWave1 20
+wvSelectSignal -win $_nWave1 {( "router0" 25 )} 
+wvSetPosition -win $_nWave1 {("router0" 25)}
+wvSetPosition -win $_nWave1 {("router0" 19)}
+wvSetPosition -win $_nWave1 {("router0" 10)}
+wvSetPosition -win $_nWave1 {("router0" 7)}
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvSetPosition -win $_nWave1 {("router0" 7)}
+wvSelectSignal -win $_nWave1 {( "router0" 8 )} 
+wvSetPosition -win $_nWave1 {("router0" 8)}
+wvSetPosition -win $_nWave1 {("router0" 9)}
+wvSetPosition -win $_nWave1 {("router0" 10)}
+wvSetPosition -win $_nWave1 {("router0" 9)}
+wvSetPosition -win $_nWave1 {("router0" 8)}
+wvSetPosition -win $_nWave1 {("router0" 7)}
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvSetPosition -win $_nWave1 {("router0" 7)}
+wvSelectSignal -win $_nWave1 {( "router0" 9 )} 
+wvSetPosition -win $_nWave1 {("router0" 9)}
+wvSetPosition -win $_nWave1 {("router0" 22)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 22)}
+wvSelectSignal -win $_nWave1 {( "router0" 6 )} 
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvSetPosition -win $_nWave1 {("router0" 9)}
+wvSetPosition -win $_nWave1 {("router0" 8)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 8)}
+wvSelectSignal -win $_nWave1 {( "router0" 6 )} 
+wvSetPosition -win $_nWave1 {("router0" 6)}
+wvSetPosition -win $_nWave1 {("router0" 11)}
+wvSetPosition -win $_nWave1 {("router0" 12)}
+wvSetPosition -win $_nWave1 {("router0" 13)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 13)}
+wvSetPosition -win $_nWave1 {("router0" 12)}
+wvSetPosition -win $_nWave1 {("router0" 11)}
+wvMoveSelected -win $_nWave1
+wvSetPosition -win $_nWave1 {("router0" 11)}
+wvSetPosition -win $_nWave1 {("router0" 12)}
+wvSelectSignal -win $_nWave1 {( "router0" 16 )} 
+wvSelectSignal -win $_nWave1 {( "router0" 5 )} 
+wvSelectSignal -win $_nWave1 {( "router0" 11 )} 
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvReloadFile -win $_nWave1
+wvSelectGroup -win $_nWave1 {router0}
+wvSetPosition -win $_nWave1 {("router0" 0)}
+wvScrollDown -win $_nWave1 0
+wvSelectGroup -win $_nWave1 {router0}
+wvSelectGroup -win $_nWave1 {router0}
+wvSelectGroup -win $_nWave1 {G3}
+wvSetPosition -win $_nWave1 {("G3" 0)}
+wvMoveSelected -win $_nWave1
+wvGetSignalOpen -win $_nWave1
+wvGetSignalSetScope -win $_nWave1 "/SystemC/core_9"
+wvGetSignalSetScope -win $_nWave1 "/SystemC/router_9"
+wvSetPosition -win $_nWave1 {("G3" 2)}
+wvSetPosition -win $_nWave1 {("G3" 2)}
+wvAddSignal -win $_nWave1 -clear
+wvAddSignal -win $_nWave1 -group {"core0" \
+{/SystemC/clk} \
+{/SystemC/rst} \
+{/SystemC/core_0/ack_tx} \
+{/SystemC/core_0/flit_tx\[33:0\]} \
+{/SystemC/core_0/req_tx} \
+{/SystemC/core_0/ack_rx} \
+{/SystemC/core_0/flit_rx\[33:0\]} \
+{/SystemC/core_0/req_rx} \
+}
+wvAddSignal -win $_nWave1 -group {"router0" \
+{/SystemC/router_0/in_req_0} \
+{/SystemC/router_0/in_req_1} \
+{/SystemC/router_0/in_req_2} \
+{/SystemC/router_0/in_req_3} \
+{/SystemC/router_0/in_req_4} \
+{/SystemC/router_0/out_ack_4} \
+{/SystemC/router_0/in_flit_0\[33:0\]} \
+{/SystemC/router_0/in_flit_1\[33:0\]} \
+{/SystemC/router_0/in_flit_2\[33:0\]} \
+{/SystemC/router_0/in_flit_3\[33:0\]} \
+{/SystemC/router_0/in_flit_4\[33:0\]} \
+{/SystemC/router_0/in_buffer_0\[33:0\]} \
+{/SystemC/router_0/in_buffer_1\[33:0\]} \
+{/SystemC/router_0/in_buffer_2\[33:0\]} \
+{/SystemC/router_0/in_buffer_3\[33:0\]} \
+{/SystemC/router_0/in_buffer_4\[33:0\]} \
+{/SystemC/router_0/dir_ready_0} \
+{/SystemC/router_0/dir_ready_1} \
+{/SystemC/router_0/dir_ready_2} \
+{/SystemC/router_0/dir_ready_3} \
+{/SystemC/router_0/dir_ready_4} \
+{/SystemC/router_0/out_ack_0} \
+{/SystemC/router_0/out_ack_1} \
+{/SystemC/router_0/out_ack_2} \
+{/SystemC/router_0/out_ack_3} \
+{/SystemC/router_0/out_req_0} \
+{/SystemC/router_0/out_req_1} \
+{/SystemC/router_0/out_req_2} \
+{/SystemC/router_0/out_req_3} \
+{/SystemC/router_0/out_req_4} \
+{/SystemC/router_0/out_flit_0\[33:0\]} \
+{/SystemC/router_0/out_flit_1\[33:0\]} \
+{/SystemC/router_0/out_flit_2\[33:0\]} \
+{/SystemC/router_0/out_flit_3\[33:0\]} \
+{/SystemC/router_0/out_flit_4\[33:0\]} \
+{/SystemC/router_0/in_ack_0} \
+{/SystemC/router_0/in_ack_1} \
+{/SystemC/router_0/in_ack_2} \
+{/SystemC/router_0/in_ack_3} \
+{/SystemC/router_0/in_ack_4} \
+{/SystemC/router_0/chout_busy_0} \
+{/SystemC/router_0/chout_busy_1} \
+{/SystemC/router_0/chout_busy_2} \
+{/SystemC/router_0/chout_busy_3} \
+{/SystemC/router_0/chout_busy_4} \
+}
+wvCollapseGroup -win $_nWave1 "router0"
+wvAddSignal -win $_nWave1 -group {"G3" \
+{/SystemC/router_9/in_flit_4\[33:0\]} \
+{/SystemC/router_9/in_req_4} \
+}
+wvAddSignal -win $_nWave1 -group {"G4" \
+}
+wvSelectSignal -win $_nWave1 {( "G3" 1 2 )} 
+wvSetPosition -win $_nWave1 {("G3" 2)}
+wvSetPosition -win $_nWave1 {("G3" 3)}
+wvSetPosition -win $_nWave1 {("G3" 3)}
+wvAddSignal -win $_nWave1 -clear
+wvAddSignal -win $_nWave1 -group {"core0" \
+{/SystemC/clk} \
+{/SystemC/rst} \
+{/SystemC/core_0/ack_tx} \
+{/SystemC/core_0/flit_tx\[33:0\]} \
+{/SystemC/core_0/req_tx} \
+{/SystemC/core_0/ack_rx} \
+{/SystemC/core_0/flit_rx\[33:0\]} \
+{/SystemC/core_0/req_rx} \
+}
+wvAddSignal -win $_nWave1 -group {"router0" \
+{/SystemC/router_0/in_req_0} \
+{/SystemC/router_0/in_req_1} \
+{/SystemC/router_0/in_req_2} \
+{/SystemC/router_0/in_req_3} \
+{/SystemC/router_0/in_req_4} \
+{/SystemC/router_0/out_ack_4} \
+{/SystemC/router_0/in_flit_0\[33:0\]} \
+{/SystemC/router_0/in_flit_1\[33:0\]} \
+{/SystemC/router_0/in_flit_2\[33:0\]} \
+{/SystemC/router_0/in_flit_3\[33:0\]} \
+{/SystemC/router_0/in_flit_4\[33:0\]} \
+{/SystemC/router_0/in_buffer_0\[33:0\]} \
+{/SystemC/router_0/in_buffer_1\[33:0\]} \
+{/SystemC/router_0/in_buffer_2\[33:0\]} \
+{/SystemC/router_0/in_buffer_3\[33:0\]} \
+{/SystemC/router_0/in_buffer_4\[33:0\]} \
+{/SystemC/router_0/dir_ready_0} \
+{/SystemC/router_0/dir_ready_1} \
+{/SystemC/router_0/dir_ready_2} \
+{/SystemC/router_0/dir_ready_3} \
+{/SystemC/router_0/dir_ready_4} \
+{/SystemC/router_0/out_ack_0} \
+{/SystemC/router_0/out_ack_1} \
+{/SystemC/router_0/out_ack_2} \
+{/SystemC/router_0/out_ack_3} \
+{/SystemC/router_0/out_req_0} \
+{/SystemC/router_0/out_req_1} \
+{/SystemC/router_0/out_req_2} \
+{/SystemC/router_0/out_req_3} \
+{/SystemC/router_0/out_req_4} \
+{/SystemC/router_0/out_flit_0\[33:0\]} \
+{/SystemC/router_0/out_flit_1\[33:0\]} \
+{/SystemC/router_0/out_flit_2\[33:0\]} \
+{/SystemC/router_0/out_flit_3\[33:0\]} \
+{/SystemC/router_0/out_flit_4\[33:0\]} \
+{/SystemC/router_0/in_ack_0} \
+{/SystemC/router_0/in_ack_1} \
+{/SystemC/router_0/in_ack_2} \
+{/SystemC/router_0/in_ack_3} \
+{/SystemC/router_0/in_ack_4} \
+{/SystemC/router_0/chout_busy_0} \
+{/SystemC/router_0/chout_busy_1} \
+{/SystemC/router_0/chout_busy_2} \
+{/SystemC/router_0/chout_busy_3} \
+{/SystemC/router_0/chout_busy_4} \
+}
+wvCollapseGroup -win $_nWave1 "router0"
+wvAddSignal -win $_nWave1 -group {"G3" \
+{/SystemC/router_9/in_flit_4\[33:0\]} \
+{/SystemC/router_9/in_req_4} \
+{/SystemC/router_9/out_ack_4} \
+}
+wvAddSignal -win $_nWave1 -group {"G4" \
+}
+wvSelectSignal -win $_nWave1 {( "G3" 3 )} 
+wvSetPosition -win $_nWave1 {("G3" 3)}
+wvSetPosition -win $_nWave1 {("G3" 4)}
+wvSetPosition -win $_nWave1 {("G3" 4)}
+wvAddSignal -win $_nWave1 -clear
+wvAddSignal -win $_nWave1 -group {"core0" \
+{/SystemC/clk} \
+{/SystemC/rst} \
+{/SystemC/core_0/ack_tx} \
+{/SystemC/core_0/flit_tx\[33:0\]} \
+{/SystemC/core_0/req_tx} \
+{/SystemC/core_0/ack_rx} \
+{/SystemC/core_0/flit_rx\[33:0\]} \
+{/SystemC/core_0/req_rx} \
+}
+wvAddSignal -win $_nWave1 -group {"router0" \
+{/SystemC/router_0/in_req_0} \
+{/SystemC/router_0/in_req_1} \
+{/SystemC/router_0/in_req_2} \
+{/SystemC/router_0/in_req_3} \
+{/SystemC/router_0/in_req_4} \
+{/SystemC/router_0/out_ack_4} \
+{/SystemC/router_0/in_flit_0\[33:0\]} \
+{/SystemC/router_0/in_flit_1\[33:0\]} \
+{/SystemC/router_0/in_flit_2\[33:0\]} \
+{/SystemC/router_0/in_flit_3\[33:0\]} \
+{/SystemC/router_0/in_flit_4\[33:0\]} \
+{/SystemC/router_0/in_buffer_0\[33:0\]} \
+{/SystemC/router_0/in_buffer_1\[33:0\]} \
+{/SystemC/router_0/in_buffer_2\[33:0\]} \
+{/SystemC/router_0/in_buffer_3\[33:0\]} \
+{/SystemC/router_0/in_buffer_4\[33:0\]} \
+{/SystemC/router_0/dir_ready_0} \
+{/SystemC/router_0/dir_ready_1} \
+{/SystemC/router_0/dir_ready_2} \
+{/SystemC/router_0/dir_ready_3} \
+{/SystemC/router_0/dir_ready_4} \
+{/SystemC/router_0/out_ack_0} \
+{/SystemC/router_0/out_ack_1} \
+{/SystemC/router_0/out_ack_2} \
+{/SystemC/router_0/out_ack_3} \
+{/SystemC/router_0/out_req_0} \
+{/SystemC/router_0/out_req_1} \
+{/SystemC/router_0/out_req_2} \
+{/SystemC/router_0/out_req_3} \
+{/SystemC/router_0/out_req_4} \
+{/SystemC/router_0/out_flit_0\[33:0\]} \
+{/SystemC/router_0/out_flit_1\[33:0\]} \
+{/SystemC/router_0/out_flit_2\[33:0\]} \
+{/SystemC/router_0/out_flit_3\[33:0\]} \
+{/SystemC/router_0/out_flit_4\[33:0\]} \
+{/SystemC/router_0/in_ack_0} \
+{/SystemC/router_0/in_ack_1} \
+{/SystemC/router_0/in_ack_2} \
+{/SystemC/router_0/in_ack_3} \
+{/SystemC/router_0/in_ack_4} \
+{/SystemC/router_0/chout_busy_0} \
+{/SystemC/router_0/chout_busy_1} \
+{/SystemC/router_0/chout_busy_2} \
+{/SystemC/router_0/chout_busy_3} \
+{/SystemC/router_0/chout_busy_4} \
+}
+wvCollapseGroup -win $_nWave1 "router0"
+wvAddSignal -win $_nWave1 -group {"G3" \
+{/SystemC/router_9/in_flit_4\[33:0\]} \
+{/SystemC/router_9/in_req_4} \
+{/SystemC/router_9/out_ack_4} \
+{/SystemC/router_9/out_req_1} \
+}
+wvAddSignal -win $_nWave1 -group {"G4" \
+}
+wvSelectSignal -win $_nWave1 {( "G3" 4 )} 
+wvSetPosition -win $_nWave1 {("G3" 4)}
+wvSetPosition -win $_nWave1 {("G3" 5)}
+wvSetPosition -win $_nWave1 {("G3" 5)}
+wvAddSignal -win $_nWave1 -clear
+wvAddSignal -win $_nWave1 -group {"core0" \
+{/SystemC/clk} \
+{/SystemC/rst} \
+{/SystemC/core_0/ack_tx} \
+{/SystemC/core_0/flit_tx\[33:0\]} \
+{/SystemC/core_0/req_tx} \
+{/SystemC/core_0/ack_rx} \
+{/SystemC/core_0/flit_rx\[33:0\]} \
+{/SystemC/core_0/req_rx} \
+}
+wvAddSignal -win $_nWave1 -group {"router0" \
+{/SystemC/router_0/in_req_0} \
+{/SystemC/router_0/in_req_1} \
+{/SystemC/router_0/in_req_2} \
+{/SystemC/router_0/in_req_3} \
+{/SystemC/router_0/in_req_4} \
+{/SystemC/router_0/out_ack_4} \
+{/SystemC/router_0/in_flit_0\[33:0\]} \
+{/SystemC/router_0/in_flit_1\[33:0\]} \
+{/SystemC/router_0/in_flit_2\[33:0\]} \
+{/SystemC/router_0/in_flit_3\[33:0\]} \
+{/SystemC/router_0/in_flit_4\[33:0\]} \
+{/SystemC/router_0/in_buffer_0\[33:0\]} \
+{/SystemC/router_0/in_buffer_1\[33:0\]} \
+{/SystemC/router_0/in_buffer_2\[33:0\]} \
+{/SystemC/router_0/in_buffer_3\[33:0\]} \
+{/SystemC/router_0/in_buffer_4\[33:0\]} \
+{/SystemC/router_0/dir_ready_0} \
+{/SystemC/router_0/dir_ready_1} \
+{/SystemC/router_0/dir_ready_2} \
+{/SystemC/router_0/dir_ready_3} \
+{/SystemC/router_0/dir_ready_4} \
+{/SystemC/router_0/out_ack_0} \
+{/SystemC/router_0/out_ack_1} \
+{/SystemC/router_0/out_ack_2} \
+{/SystemC/router_0/out_ack_3} \
+{/SystemC/router_0/out_req_0} \
+{/SystemC/router_0/out_req_1} \
+{/SystemC/router_0/out_req_2} \
+{/SystemC/router_0/out_req_3} \
+{/SystemC/router_0/out_req_4} \
+{/SystemC/router_0/out_flit_0\[33:0\]} \
+{/SystemC/router_0/out_flit_1\[33:0\]} \
+{/SystemC/router_0/out_flit_2\[33:0\]} \
+{/SystemC/router_0/out_flit_3\[33:0\]} \
+{/SystemC/router_0/out_flit_4\[33:0\]} \
+{/SystemC/router_0/in_ack_0} \
+{/SystemC/router_0/in_ack_1} \
+{/SystemC/router_0/in_ack_2} \
+{/SystemC/router_0/in_ack_3} \
+{/SystemC/router_0/in_ack_4} \
+{/SystemC/router_0/chout_busy_0} \
+{/SystemC/router_0/chout_busy_1} \
+{/SystemC/router_0/chout_busy_2} \
+{/SystemC/router_0/chout_busy_3} \
+{/SystemC/router_0/chout_busy_4} \
+}
+wvCollapseGroup -win $_nWave1 "router0"
+wvAddSignal -win $_nWave1 -group {"G3" \
+{/SystemC/router_9/in_flit_4\[33:0\]} \
+{/SystemC/router_9/in_req_4} \
+{/SystemC/router_9/out_ack_4} \
+{/SystemC/router_9/out_req_1} \
+{/SystemC/router_9/out_flit_1\[33:0\]} \
+}
+wvAddSignal -win $_nWave1 -group {"G4" \
+}
+wvSelectSignal -win $_nWave1 {( "G3" 5 )} 
+wvSetPosition -win $_nWave1 {("G3" 5)}
+wvSetPosition -win $_nWave1 {("G3" 6)}
+wvSetPosition -win $_nWave1 {("G3" 6)}
+wvAddSignal -win $_nWave1 -clear
+wvAddSignal -win $_nWave1 -group {"core0" \
+{/SystemC/clk} \
+{/SystemC/rst} \
+{/SystemC/core_0/ack_tx} \
+{/SystemC/core_0/flit_tx\[33:0\]} \
+{/SystemC/core_0/req_tx} \
+{/SystemC/core_0/ack_rx} \
+{/SystemC/core_0/flit_rx\[33:0\]} \
+{/SystemC/core_0/req_rx} \
+}
+wvAddSignal -win $_nWave1 -group {"router0" \
+{/SystemC/router_0/in_req_0} \
+{/SystemC/router_0/in_req_1} \
+{/SystemC/router_0/in_req_2} \
+{/SystemC/router_0/in_req_3} \
+{/SystemC/router_0/in_req_4} \
+{/SystemC/router_0/out_ack_4} \
+{/SystemC/router_0/in_flit_0\[33:0\]} \
+{/SystemC/router_0/in_flit_1\[33:0\]} \
+{/SystemC/router_0/in_flit_2\[33:0\]} \
+{/SystemC/router_0/in_flit_3\[33:0\]} \
+{/SystemC/router_0/in_flit_4\[33:0\]} \
+{/SystemC/router_0/in_buffer_0\[33:0\]} \
+{/SystemC/router_0/in_buffer_1\[33:0\]} \
+{/SystemC/router_0/in_buffer_2\[33:0\]} \
+{/SystemC/router_0/in_buffer_3\[33:0\]} \
+{/SystemC/router_0/in_buffer_4\[33:0\]} \
+{/SystemC/router_0/dir_ready_0} \
+{/SystemC/router_0/dir_ready_1} \
+{/SystemC/router_0/dir_ready_2} \
+{/SystemC/router_0/dir_ready_3} \
+{/SystemC/router_0/dir_ready_4} \
+{/SystemC/router_0/out_ack_0} \
+{/SystemC/router_0/out_ack_1} \
+{/SystemC/router_0/out_ack_2} \
+{/SystemC/router_0/out_ack_3} \
+{/SystemC/router_0/out_req_0} \
+{/SystemC/router_0/out_req_1} \
+{/SystemC/router_0/out_req_2} \
+{/SystemC/router_0/out_req_3} \
+{/SystemC/router_0/out_req_4} \
+{/SystemC/router_0/out_flit_0\[33:0\]} \
+{/SystemC/router_0/out_flit_1\[33:0\]} \
+{/SystemC/router_0/out_flit_2\[33:0\]} \
+{/SystemC/router_0/out_flit_3\[33:0\]} \
+{/SystemC/router_0/out_flit_4\[33:0\]} \
+{/SystemC/router_0/in_ack_0} \
+{/SystemC/router_0/in_ack_1} \
+{/SystemC/router_0/in_ack_2} \
+{/SystemC/router_0/in_ack_3} \
+{/SystemC/router_0/in_ack_4} \
+{/SystemC/router_0/chout_busy_0} \
+{/SystemC/router_0/chout_busy_1} \
+{/SystemC/router_0/chout_busy_2} \
+{/SystemC/router_0/chout_busy_3} \
+{/SystemC/router_0/chout_busy_4} \
+}
+wvCollapseGroup -win $_nWave1 "router0"
+wvAddSignal -win $_nWave1 -group {"G3" \
+{/SystemC/router_9/in_flit_4\[33:0\]} \
+{/SystemC/router_9/in_req_4} \
+{/SystemC/router_9/out_ack_4} \
+{/SystemC/router_9/out_req_1} \
+{/SystemC/router_9/out_flit_1\[33:0\]} \
+{/SystemC/router_9/in_ack_1} \
+}
+wvAddSignal -win $_nWave1 -group {"G4" \
+}
+wvSelectSignal -win $_nWave1 {( "G3" 6 )} 
+wvSetPosition -win $_nWave1 {("G3" 6)}
+wvSetPosition -win $_nWave1 {("G3" 6)}
+wvSetPosition -win $_nWave1 {("G3" 6)}
+wvAddSignal -win $_nWave1 -clear
+wvAddSignal -win $_nWave1 -group {"core0" \
+{/SystemC/clk} \
+{/SystemC/rst} \
+{/SystemC/core_0/ack_tx} \
+{/SystemC/core_0/flit_tx\[33:0\]} \
+{/SystemC/core_0/req_tx} \
+{/SystemC/core_0/ack_rx} \
+{/SystemC/core_0/flit_rx\[33:0\]} \
+{/SystemC/core_0/req_rx} \
+}
+wvAddSignal -win $_nWave1 -group {"router0" \
+{/SystemC/router_0/in_req_0} \
+{/SystemC/router_0/in_req_1} \
+{/SystemC/router_0/in_req_2} \
+{/SystemC/router_0/in_req_3} \
+{/SystemC/router_0/in_req_4} \
+{/SystemC/router_0/out_ack_4} \
+{/SystemC/router_0/in_flit_0\[33:0\]} \
+{/SystemC/router_0/in_flit_1\[33:0\]} \
+{/SystemC/router_0/in_flit_2\[33:0\]} \
+{/SystemC/router_0/in_flit_3\[33:0\]} \
+{/SystemC/router_0/in_flit_4\[33:0\]} \
+{/SystemC/router_0/in_buffer_0\[33:0\]} \
+{/SystemC/router_0/in_buffer_1\[33:0\]} \
+{/SystemC/router_0/in_buffer_2\[33:0\]} \
+{/SystemC/router_0/in_buffer_3\[33:0\]} \
+{/SystemC/router_0/in_buffer_4\[33:0\]} \
+{/SystemC/router_0/dir_ready_0} \
+{/SystemC/router_0/dir_ready_1} \
+{/SystemC/router_0/dir_ready_2} \
+{/SystemC/router_0/dir_ready_3} \
+{/SystemC/router_0/dir_ready_4} \
+{/SystemC/router_0/out_ack_0} \
+{/SystemC/router_0/out_ack_1} \
+{/SystemC/router_0/out_ack_2} \
+{/SystemC/router_0/out_ack_3} \
+{/SystemC/router_0/out_req_0} \
+{/SystemC/router_0/out_req_1} \
+{/SystemC/router_0/out_req_2} \
+{/SystemC/router_0/out_req_3} \
+{/SystemC/router_0/out_req_4} \
+{/SystemC/router_0/out_flit_0\[33:0\]} \
+{/SystemC/router_0/out_flit_1\[33:0\]} \
+{/SystemC/router_0/out_flit_2\[33:0\]} \
+{/SystemC/router_0/out_flit_3\[33:0\]} \
+{/SystemC/router_0/out_flit_4\[33:0\]} \
+{/SystemC/router_0/in_ack_0} \
+{/SystemC/router_0/in_ack_1} \
+{/SystemC/router_0/in_ack_2} \
+{/SystemC/router_0/in_ack_3} \
+{/SystemC/router_0/in_ack_4} \
+{/SystemC/router_0/chout_busy_0} \
+{/SystemC/router_0/chout_busy_1} \
+{/SystemC/router_0/chout_busy_2} \
+{/SystemC/router_0/chout_busy_3} \
+{/SystemC/router_0/chout_busy_4} \
+}
+wvCollapseGroup -win $_nWave1 "router0"
+wvAddSignal -win $_nWave1 -group {"G3" \
+{/SystemC/router_9/in_flit_4\[33:0\]} \
+{/SystemC/router_9/in_req_4} \
+{/SystemC/router_9/out_ack_4} \
+{/SystemC/router_9/out_req_1} \
+{/SystemC/router_9/out_flit_1\[33:0\]} \
+{/SystemC/router_9/in_ack_1} \
+}
+wvAddSignal -win $_nWave1 -group {"G4" \
+}
+wvSelectSignal -win $_nWave1 {( "G3" 6 )} 
+wvSetPosition -win $_nWave1 {("G3" 6)}
+wvGetSignalClose -win $_nWave1
+wvSelectGroup -win $_nWave1 {G4}
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvReloadFile -win $_nWave1
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvReloadFile -win $_nWave1
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvReloadFile -win $_nWave1
+wvSelectSignal -win $_nWave1 {( "G3" 6 )} 
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvReloadFile -win $_nWave1
+wvDisplayGridCount -win $_nWave1 -off
+wvGetSignalClose -win $_nWave1
+wvConvertFile -win $_nWave1 -o "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd.fsdb" \
+           "/RAID2/COURSE/mlchip/mlchip098/hw3/wave.vcd"
+wvReloadFile -win $_nWave1

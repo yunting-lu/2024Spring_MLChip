@@ -72,13 +72,6 @@ int sc_main(int argc, char* argv[])
             w_bound = (j>0)?(j-1):(3);
             e_bound = (j<3)?(j+1):(0);
 
-            // cout << "-----router_ptr: " << i*4+j << " -----" << endl;
-            // cout << "n_index: " << n_bound*4+j << endl;
-            // cout << "s_index: " << s_bound*4+j << endl;
-            // cout << "w_index: " << i*4+w_bound << endl;
-            // cout << "e_index: " << i*4+e_bound << endl;
-            // cout << "--------------------" << endl;
-
             //out_flit
             router_ptr[i*4+j]->out_flit[0](flit_router[0][n_bound*4+j]);
             router_ptr[i*4+j]->out_flit[1](flit_router[1][s_bound*4+j]);
@@ -124,7 +117,6 @@ int sc_main(int argc, char* argv[])
     
     sc_start(); //500, SC_NS
 
-    cout << "close vcd file" << endl;
     sc_close_vcd_trace_file(tf);
 
     return 0;

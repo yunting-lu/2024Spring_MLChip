@@ -56,6 +56,7 @@ SC_MODULE( Router ) {
                 sc_trace(tf, out_ack[i], "router_" + std::to_string(id) + ".out_ack_" + std::to_string(i));
                 sc_trace(tf, in_buffer[i], "router_" + std::to_string(id) + ".in_buffer_" + std::to_string(i));
                 sc_trace(tf, dir_ready[i], "router_" + std::to_string(id) + ".dir_ready_" + std::to_string(i));
+                sc_trace(tf, chout_busy[i], "router_" + std::to_string(id) + ".chout_busy_" + std::to_string(i));
             }
         }
 
@@ -82,21 +83,6 @@ SC_MODULE( Router ) {
             }
         }
         else{
-
-
-            //-------------------------------------------------------------//
-
-            //* in_req, in_flit -> in_buffer, out_ack
-            for(int i=0; i<5; i++){
-                if(in_req[i].read() == 1 && buf_full[i] == 0){
-                    out_ack[i].write(1);
-                    in_buffer[i] = in_flit[i].read();
-                    buf_full[i] = 1;
-                }
-                else{
-                    out_ack[i].write(0);
-                }
-            }
             
             //-------------------------------------------------------------//
 
@@ -130,16 +116,7 @@ SC_MODULE( Router ) {
                     }
 
                     dir_ready[i] = 1; //!
-
-                    //check x_dest & y_dest
-                    // if(router_id==13){
-                    //     cout << "-------------------------------" << endl;
-                    //     cout << sc_time_stamp() << "input from port " << i << endl;
-                    //     cout << "Router id: " << router_id << "\t(x_coor, y_coor): " << x_coor << ", " << y_coor << endl;
-                    //     cout << "input destination: " << "(x_dest, y_dest): " << x_dest[i] << ", " << y_dest[i] << endl;
-                    //     cout << "output direction is " << out_dir[i] << endl;
-                    //     cout << "-------------------------------" << endl;
-                    // }
+                    
                 }
             }
 
@@ -154,55 +131,68 @@ SC_MODULE( Router ) {
                             chout_busy[out_idx] = 1;
                             occupied_by[out_idx] = in_idx;
                         }
-                    }
-                    
+                    }             
                 }
             }
 
             //-------------------------------------------------------------//
 
-            //* out_req, out_flit
-            for(int out_idx=0; out_idx<5; out_idx++){
-                //output
-                if(chout_busy[out_idx] && buf_full[occupied_by[out_idx]]){
-                    out_req[out_idx].write(1);
-                    out_flit[out_idx].write(in_buffer[occupied_by[out_idx]]);
-                }
-            }
-            
             sc_lv<34> buf_value_temp[5];
             //to avoid the loss of value of in_buffer
             for(int idx=0; idx<5; idx++){
                 buf_value_temp[idx] = in_buffer[idx];
             }
 
+            //optimize: buf_full reset before in_req
+            //* clear buffer, reset output
             for(int out_idx=0; out_idx<5; out_idx++){
-                //clear buffer
-                if(in_ack[out_idx].read()){
+                if(in_ack[out_idx].read() && chout_busy[out_idx]){
                     buf_full[occupied_by[out_idx]] = 0;
                     in_buffer[occupied_by[out_idx]] = 0;
                     if(buf_full[occupied_by[out_idx]]==0){
-                        out_req[out_idx].write(0);
+                        out_req[out_idx].write(0); //!
                         out_flit[out_idx].write(0);
                     }
                 }
             }
 
+            //* reset busy
             for(int out_idx=0; out_idx<5; out_idx++){
-                //reset busy
                 if(in_ack[out_idx] && buf_value_temp[occupied_by[out_idx]][32]==1){
                     dir_ready[occupied_by[out_idx]] = 0; //!
                     chout_busy[out_idx] = 0;
-                    occupied_by[out_idx] = 5;
+                    occupied_by[out_idx] = 0;
                 }                    
             }
 
             //-------------------------------------------------------------//
 
+            //* in_req, in_flit -> in_buffer, out_ack
+            for(int i=0; i<5; i++){
+                if(in_req[i].read() == 1 && buf_full[i] == 0){
+                    out_ack[i].write(1);
+                    in_buffer[i] = in_flit[i].read();
+                    buf_full[i] = 1;
+                }
+                else{
+                    out_ack[i].write(0);
+                }
+            }
+
+            //-------------------------------------------------------------//
+
+            //* output: out_req, out_flit
+            for(int out_idx=0; out_idx<5; out_idx++){
+                if(chout_busy[out_idx] && buf_full[occupied_by[out_idx]]){
+                    out_req[out_idx].write(1);
+                    out_flit[out_idx].write(in_buffer[occupied_by[out_idx]]);
+                }
+            }
+
 
         } //end else //(!rst.read())
 
-    }
+    } //end run
 
 
 };
