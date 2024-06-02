@@ -115,7 +115,7 @@ SC_MODULE( Router ) {
                         out_dir[i] = LOCAL;
                     }
 
-                    dir_ready[i] = 1; //!
+                    dir_ready[i] = 1;
                     
                 }
             }
@@ -150,7 +150,7 @@ SC_MODULE( Router ) {
                     buf_full[occupied_by[out_idx]] = 0;
                     in_buffer[occupied_by[out_idx]] = 0;
                     if(buf_full[occupied_by[out_idx]]==0){
-                        out_req[out_idx].write(0); //!
+                        out_req[out_idx].write(0);
                         out_flit[out_idx].write(0);
                     }
                 }
@@ -159,7 +159,7 @@ SC_MODULE( Router ) {
             //* reset busy
             for(int out_idx=0; out_idx<5; out_idx++){
                 if(in_ack[out_idx] && buf_value_temp[occupied_by[out_idx]][32]==1){
-                    dir_ready[occupied_by[out_idx]] = 0; //!
+                    dir_ready[occupied_by[out_idx]] = 0;
                     chout_busy[out_idx] = 0;
                     occupied_by[out_idx] = 0;
                 }                    

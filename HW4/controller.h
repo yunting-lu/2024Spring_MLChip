@@ -183,7 +183,7 @@ SC_MODULE( Controller ) {
                 if(layer_id_val!=0 && layer_id_type_val==1) type_bias = 1;
                 else                                        type_bias = 0;
 
-                wait_data_from_rom = 1; //todo reset
+                wait_data_from_rom = 1;
                 temp_flit_vec.clear();
                 //header flit
                 temp_flit[33] = 1;
@@ -234,14 +234,11 @@ SC_MODULE( Controller ) {
         if(get_data && cnt==0){
             req_tx.write(1);
             flit_tx.write(temp_flit_vec[cnt]);
-            // cout << "INFO: header flit sent to router0" << endl;
-            // cout << "flit_tx: " << temp_flit_vec[cnt] << endl;
             cnt++;
         }
         else if(ack_tx.read() && get_data && cnt<temp_flit_vec.size()){
             req_tx.write(1);
             flit_tx.write(temp_flit_vec[cnt]);
-            // cout << "flit_tx: " << logicvectorToFloat(temp_flit_vec[cnt].range(31,0)) << endl;
             cnt++;
         }
         else if(ack_tx.read() && get_data && cnt==temp_flit_vec.size()){
@@ -278,7 +275,6 @@ SC_MODULE( Controller ) {
             else{
                 data_rec_vec.push_back(logicvectorToFloat(flit_rec.range(31,0)));
                 if(flit_rec[32]==1){
-                    // cout << "INFO: controller received tail flit" << endl;
                     //SoftMax
                     double sum = 0;
                     vector<double> softmax_result(1000);
@@ -295,7 +291,6 @@ SC_MODULE( Controller ) {
                     sort(softmax_result_pair.begin(), softmax_result_pair.end(), [](const pair<int, double> &left, const pair<int, double> &right) {
                         return left.second > right.second;
                     });
-                    
 
                     cout << " Top \t idx \t val \t        possibility \t class name" << endl;
                     cout << "------------------------------------------------------------" << endl;

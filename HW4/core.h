@@ -44,9 +44,7 @@ SC_MODULE( Core ) {
     Core(sc_module_name name, int id, sc_trace_file *tf=nullptr) : sc_module(name), pe()
     {
         core_id = id;
-
         pe.init(core_id);
-        // cout << "Core " << core_id << " init" << endl;
 
         this->tf = tf;
         SC_METHOD(run);
@@ -126,8 +124,6 @@ SC_MODULE( Core ) {
             //packeting & computing
             if(req_rx.read() == 1 && ack_rx == 1){
                 flit_rec = flit_rx.read();
-                // cout << "Core " << core_id << " received flit: " << flit_rec << endl;
-                // cout << "Core " << core_id << " received flit: " << logicvectorToFloat(flit_rec.range(31, 0)) << endl;
                 if(flit_rec[33]==1){ //header
                     cout << "Core " << core_id << " received packet from " << flit_rec.range(31, 28) << endl;
                     if(flit_rec[23]==1) rec_input = 1;
@@ -154,10 +150,8 @@ SC_MODULE( Core ) {
                     //input tail
                     if(rec_input && flit_rec[32]==1){
                         // start_computing
-                        // cout << "Core " << core_id << " received input tail" << endl;
                         p_output = pe.alexnet_layer(*p_input, *p_weight, *p_bias);
-                        // cout << "p_output.datas[0]: " << p_output.datas[0] << endl;
-                        out_ready = 1; //todo reset
+                        out_ready = 1;
                     }
                 }
             }
@@ -172,11 +166,6 @@ SC_MODULE( Core ) {
                 req_tx.write(1);
                 flit_tx.write(flit_send);
                 cnt_out++;
-                // cout << "Core " << core_id << " sent flit: " << flit_send << endl;
-                // cout << "----------------------" << endl;
-                // cout << "From: " << p_output.source_id << endl;
-                // cout << "To:   " << p_output.dest_id << endl;
-                // cout << "----------------------" << endl;
             }
             else if(ack_tx.read() && out_ready && cnt_out<=p_output.datas.size()){
                 flit_send[33] = 0;
@@ -185,7 +174,6 @@ SC_MODULE( Core ) {
                 flit_send.range(31, 0) = floatToLogicvector(p_output.datas[cnt_out-1]);
                 req_tx.write(1);
                 flit_tx.write(flit_send);
-                // cout << "Core " << core_id << " sent flit: " << p_output.datas[cnt_out] << endl;
                 cnt_out++;
             }
             else if(ack_tx.read() && out_ready && cnt_out>p_output.datas.size()){
@@ -197,9 +185,7 @@ SC_MODULE( Core ) {
                 p_input->datas.clear();
                 p_weight->datas.clear();
                 p_bias->datas.clear();
-            }
-            
-            
+            }            
         }
     }
 

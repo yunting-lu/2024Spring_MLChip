@@ -44,30 +44,10 @@ void PE::init(int pe_id) {
         break;
     }
 }
-/*
-Packet* PE::get_packet() {
-    return nullptr;
-}
 
-void PE::check_packet(Packet* p) {
-    
-}
-*/
 Packet PE::alexnet_layer(const Packet& p_i, const Packet& p_w, const Packet& p_b) {
     Packet new_packet;
-    cout << "PE " << id << " is computing..." << endl;
-    // cout << "weight 0: " << p_w.datas[0] << endl;
-    // cout << "weight 1: " << p_w.datas[1] << endl;
-    // cout << "weight 2: " << p_w.datas[2] << endl;
-    // cout << "weight f: " << p_w.datas[p_w.datas.size()-1] << endl;
-    // cout << "bias 0: " << p_b.datas[0] << endl;
-    // cout << "bias 1: " << p_b.datas[1] << endl;
-    // cout << "bias 2: " << p_b.datas[2] << endl;
-    // cout << "bias f: " << p_b.datas[p_b.datas.size()-1] << endl;
-    // cout << "input 0: " << p_i.datas[0] << endl;
-    // cout << "input 1: " << p_i.datas[1] << endl;
-    // cout << "input 2: " << p_i.datas[2] << endl;
-    // cout << "input f: " << p_i.datas[p_i.datas.size()-1] << endl;
+    // cout << "PE " << id << " is computing..." << endl;
     new_packet.source_id = id;
     new_packet.dest_id = des_id;
     new_packet.datas.clear();
@@ -151,7 +131,6 @@ Packet PE::alexnet_layer(const Packet& p_i, const Packet& p_w, const Packet& p_b
                     for(int ic=0; ic<IN_CHANNELS; ic++){
                         for(int krow=0; krow<KERNAL_SIZE; krow++){
                             for(int kcol=0; kcol<KERNAL_SIZE; kcol++){
-
                                 //[ic, wrow, wcol] -> [ic, stride*orow + krow -2, stride*ocol + kcol -2]
                                 i_ptr_x = STRIDE*ocol + kcol - PADDING;
                                 i_ptr_y = STRIDE*orow + krow - PADDING;
@@ -167,11 +146,9 @@ Packet PE::alexnet_layer(const Packet& p_i, const Packet& p_w, const Packet& p_b
                     
                     if((partial_sum + p_b.datas[oc])>0){
                         partial_sum += p_b.datas[oc];
-                        // out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol] = partial_sum;
                         new_packet.datas.push_back(partial_sum);
                     }
                     else{
-                        // out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol] = 0;
                         new_packet.datas.push_back(0);
                     }
                 }
@@ -228,13 +205,12 @@ Packet PE::alexnet_layer(const Packet& p_i, const Packet& p_w, const Packet& p_b
                             }
                         }
                     }
-                    // out_feature_map[oc*OUT_HEIGHT*OUT_WIDTH + orow*OUT_WIDTH + ocol] = largest;
                     new_packet.datas.push_back(largest);
                 }
             }
         }
         return new_packet;
-    } //end id 2
+    }
     //LINEAR_RELU
     else if(id == 12 || id == 8){
         if(id==12){
@@ -255,11 +231,9 @@ Packet PE::alexnet_layer(const Packet& p_i, const Packet& p_w, const Packet& p_b
             //RELU
             if((partial_sum + p_b.datas[oc])>0){
                 partial_sum += p_b.datas[oc];
-                // out_feature_map[oc] = (sc_fixed_fast<40,17>)(partial_sum);
                 new_packet.datas.push_back(partial_sum);
             }
             else{
-                // out_feature_map[oc] = 0;
                 new_packet.datas.push_back(0);
             }
         }
@@ -277,12 +251,10 @@ Packet PE::alexnet_layer(const Packet& p_i, const Packet& p_w, const Packet& p_b
                 partial_sum += p_i.datas[ic] * p_w.datas[oc*IN_CHANNELS + ic];
             }
             partial_sum += p_b.datas[oc];
-            // out_feature_map[oc] = (sc_fixed_fast<40,17>)(partial_sum);
             new_packet.datas.push_back(partial_sum);
         }
         return new_packet;
     }
-
     else{
         cout << "Error: Invalid PE id " << id << "." << endl;
         return new_packet;

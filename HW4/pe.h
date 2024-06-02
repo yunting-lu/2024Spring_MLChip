@@ -22,18 +22,12 @@ struct Packet {
 class PE {
 public:
     PE();
-    // Packet* get_packet();
-    // void check_packet(Packet* p);
     void init(int pe_id);
     Packet alexnet_layer(const Packet& p_i, const Packet& p_w, const Packet& p_b);
     
 private:
     int id;
     int des_id;
-    int send_count;
-    int recv_count;
-    vector<Packet> send_packets;
-    vector<Packet> recv_packets;
 };
 
 #endif

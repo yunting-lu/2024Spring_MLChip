@@ -8,7 +8,7 @@ RPATH=-Wl,-rpath,$(HOME)/systemc-2.3.3/lib-linux64
 # export LD_LIBRARY_PATH=$(SYSTEMC_HOME)/lib-linux64
 
 O = run
-C = *.cpp *.o
+C = *.cpp
 
 all:
 	g++ -I . -I  $(INC_DIR) -L . -L $(LIB_DIR) -o $(O) $(C) $(LIB) $(RPATH) -O3
