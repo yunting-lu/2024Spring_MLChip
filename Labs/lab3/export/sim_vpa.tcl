@@ -1,1 +1,0 @@
-vpa::start_simulation Debug/sim {/home/2024MLChip/mlchip098/lab3/export} {--cwr_wait --cwr_properties_xml Properties.xml} 120
